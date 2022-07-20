@@ -1,27 +1,37 @@
 import Foundation
 
-class WeatherForCity {
-    var currentTemperature: Float
-    var feelsTemperature: Float
-    var pressure: Float
-    var humidity: Float
-    var windSpeed: Float
-    var cloudsInPercent: Float
-    var rainInLast1H: Float
-    var snowInLast1H: Float
-    var lastUpdate: Date
-    var weatherDescription: String
+struct WeatherForCity: Decodable {
+    let mesurements: Mesurements
+    let description: Description
     
-    init(currentTemperature: Float, feelsTemperature: Float, pressure: Float, humidity: Float, windSpeed: Float, cloudsInPercent: Float, rainInLast1H: Float, snowInLast1H: Float, lastUpdate: Date, weatherDescription: String) {
-        self.currentTemperature = currentTemperature
-        self.feelsTemperature = feelsTemperature
-        self.pressure = pressure
-        self.humidity = humidity
-        self.windSpeed = windSpeed
-        self.cloudsInPercent = cloudsInPercent
-        self.rainInLast1H = rainInLast1H
-        self.snowInLast1H = snowInLast1H
-        self.lastUpdate = lastUpdate
-        self.weatherDescription = weatherDescription
+    private enum CodingKeys: String, CodingKey {
+        case mesurements = "main"
+        case description = "weather"
+    }
+    
+}
+
+
+struct Mesurements: Decodable {
+    let temperature: Double
+    let pressure: Double
+    let humidity: Double
+    
+    private enum CodingKeys: String, CodingKey {
+        case temperature = "temp"
+        case pressure
+        case humidity
     }
 }
+
+struct Description: Decodable {
+    let descriptionWeather: String
+    let main: String
+    
+    private enum CodingKeys: String, CodingKey {
+        case descriptionWeather = "description"
+        case main
+    }
+}
+
+

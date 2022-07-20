@@ -2,7 +2,7 @@
 # platform :ios, '9.0'
 
 plugin 'cocoapods-keys', {
-  :project => "Weather App",
+  :project => "Weather_App",
   :keys => [
     "OpenWeatherApiKey"
   ]
