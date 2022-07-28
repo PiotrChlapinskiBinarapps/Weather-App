@@ -7,8 +7,7 @@
 
 import XCTest
 
-class Weather_AppUITestsLaunchTests: XCTestCase {
-
+class WeatherAppUITestsLaunchTests: XCTestCase {
     override class var runsForEachTargetApplicationUIConfiguration: Bool {
         true
     }
