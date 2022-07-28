@@ -1,8 +1,14 @@
 PODS:
   - Keys (1.0.1)
+  - SwiftLint (0.47.1)
 
 DEPENDENCIES:
   - Keys (from `Pods/CocoaPodsKeys`)
+  - SwiftLint
+
+SPEC REPOS:
+  trunk:
+    - SwiftLint
 
 EXTERNAL SOURCES:
   Keys:
@@ -10,7 +16,8 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Keys: a576f4c9c1c641ca913a959a9c62ed3f215a8de9
+  SwiftLint: f80f1be7fa96d30e0aa68e58d45d4ea1ccaac519
 
-PODFILE CHECKSUM: ab98c531ea844970a85866f5ba4dc582e8502de7
+PODFILE CHECKSUM: d617e1e24cc62a512e8e2e9e7ffaaea31272652c
 
 COCOAPODS: 1.11.3
