@@ -1,7 +1,7 @@
 import CoreLocation
 import UIKit
 
-class ViewController: UIViewController, UITableViewDataSource {
+class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     @IBOutlet var weatherTableView: UITableView!
     private let userLocationViewModel = UserLocationViewModel()
     var weatherForCityViewModel: WeatherForCityViewModel = .init()
@@ -22,7 +22,9 @@ class ViewController: UIViewController, UITableViewDataSource {
                                                object: nil)
         weatherTableView.register(UINib(nibName: "WeatherCell", bundle: nil), forCellReuseIdentifier: "WeatherCell")
         weatherTableView.dataSource = self
+        weatherTableView.delegate = self
         weatherTableView.backgroundColor = .white
+        weatherTableView.allowsSelection = true
     }
 
     @objc func coordinateChanged(_: Notification) {
@@ -62,5 +64,17 @@ class ViewController: UIViewController, UITableViewDataSource {
         cell.degreeLabel.text = "\(weatherForCityViewModel.weathers[indexPath.row].mesurements.temperature) °C"
 
         return cell
+    }
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        performSegue(withIdentifier: "WeatherDetails", sender: indexPath)
+    }
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let segueController = segue.destination as? WeatherDetailsViewController, let sender = sender as? IndexPath else {
+            return
+        }
+        
+        segueController.weather = weatherForCityViewModel.weathers[sender.row]
     }
 }
