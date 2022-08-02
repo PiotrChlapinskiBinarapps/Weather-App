@@ -14,7 +14,8 @@ class WeatherForCityViewModel {
 
     func getWeatherForCity(cityName: String) {
         guard let url = URL(string: "https://api.openweathermap.org/data/2.5/weather?q=\(cityName)" +
-                            "&appid=\(EidolonKeys().openWeatherApiKey)&units=metric") else {
+            "&appid=\(EidolonKeys().openWeatherApiKey)&units=metric")
+        else {
             return
         }
         getWeather(url: url)
@@ -22,7 +23,8 @@ class WeatherForCityViewModel {
 
     func getWeatherForCoordinate(coordinate: CLLocationCoordinate2D) {
         guard let url = URL(string: "https://api.openweathermap.org/data/2.5/weather?lat=\(coordinate.latitude)" +
-                            "&lon=\(coordinate.longitude)&appid=\(EidolonKeys().openWeatherApiKey)&units=metric") else {
+            "&lon=\(coordinate.longitude)&appid=\(EidolonKeys().openWeatherApiKey)&units=metric")
+        else {
             return
         }
         getWeather(url: url)

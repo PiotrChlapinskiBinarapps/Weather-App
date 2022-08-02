@@ -44,8 +44,8 @@ class UserLocationViewModel: NSObject, CLLocationManagerDelegate {
             beginLocationUpdates(locationManager: manager)
         }
     }
-    
-    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+
+    func locationManager(_: CLLocationManager, didFailWithError error: Error) {
         print(error)
     }
 }

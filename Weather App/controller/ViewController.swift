@@ -11,15 +11,9 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         // Do any additional setup after loading the view.
         userLocationViewModel.configureLocationService()
 
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(coordinateChanged),
-                                               name: .coordinateChanged,
-                                               object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(coordinateChanged), name: .coordinateChanged, object: nil)
 
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(receivedWeather(_:)),
-                                               name: .weatherReturned,
-                                               object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(receivedWeather(_:)), name: .weatherReturned, object: nil)
         weatherTableView.register(UINib(nibName: "WeatherCell", bundle: nil), forCellReuseIdentifier: "WeatherCell")
         weatherTableView.dataSource = self
         weatherTableView.delegate = self
@@ -53,7 +47,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // Fetch a cell of the appropriate type.
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "WeatherCell", for: indexPath)
-                as? WeatherCell else {
+            as? WeatherCell
+        else {
             return tableView.dequeueReusableCell(withIdentifier: "WeatherCell", for: indexPath)
         }
 
@@ -66,16 +61,17 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         return cell
     }
 
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
         performSegue(withIdentifier: "WeatherDetails", sender: indexPath)
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard let segueController = segue.destination as?
-                WeatherDetailsViewController, let sender = sender as? IndexPath else {
+            WeatherDetailsViewController, let sender = sender as? IndexPath
+        else {
             return
         }
-        
+
         segueController.weather = weatherForCityViewModel.weathers[sender.row]
     }
 }

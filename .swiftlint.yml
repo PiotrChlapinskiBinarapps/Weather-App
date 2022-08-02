@@ -1,6 +1,14 @@
+disabled_rules:
+  - unused_optional_binding
+
+opt_in_rules:
+  - file_header
+  - indentation_width
+
 file_length: 660
 function_parameter_count: 10
 function_body_length: 100
+line_length: 250
 
 identifier_name:
   allowed_symbols: ["_"]
