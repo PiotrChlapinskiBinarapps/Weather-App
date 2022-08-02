@@ -1,0 +1,13 @@
+file_length: 660
+function_parameter_count: 10
+function_body_length: 100
+
+identifier_name:
+  allowed_symbols: ["_"]
+  max_length: 50
+  excluded:
+    - id
+    - in
+
+trailing_whitespace:
+  ignores_empty_lines: true

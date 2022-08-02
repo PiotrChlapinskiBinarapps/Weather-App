@@ -71,7 +71,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard let segueController = segue.destination as? WeatherDetailsViewController, let sender = sender as? IndexPath else {
+        guard let segueController = segue.destination as?
+                WeatherDetailsViewController, let sender = sender as? IndexPath else {
             return
         }
         
