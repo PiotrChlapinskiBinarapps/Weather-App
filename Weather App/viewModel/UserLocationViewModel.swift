@@ -26,7 +26,7 @@ class UserLocationViewModel: NSObject, CLLocationManagerDelegate {
     }
 
     func beginLocationUpdates(locationManager: CLLocationManager) {
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.desiredAccuracy = kCLLocationAccuracyThreeKilometers
         locationManager.requestLocation()
     }
 
