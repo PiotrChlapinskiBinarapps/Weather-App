@@ -1,5 +1,6 @@
 import Foundation
 
+// A struct for to hold information about weather
 struct WeatherForCity: Decodable {
     let mesurements: Mesurements
     let description: [Description]

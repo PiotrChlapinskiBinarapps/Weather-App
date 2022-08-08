@@ -9,43 +9,46 @@ import CoreLocation
 import Foundation
 import Keys
 
-class WeatherForCityViewModel {
+protocol WeatherForCityViewModel {
+    var weathers: [WeatherForCity] {get}
+    func getWeatherForCity(cityName: String) async
+    func getWeatherForCoordinate(coordinate: CLLocationCoordinate2D) async
+}
+
+class WeatherForCityViewModelImpl: WeatherForCityViewModel {
     var weathers: [WeatherForCity] = []
 
-    func getWeatherForCity(cityName: String) {
-        guard let url = URL(string: "https://api.openweathermap.org/data/2.5/weather?q=\(cityName)" +
+    func getWeatherForCity(cityName: String) async {
+        guard let requestURL = Bundle.main.object(forInfoDictionaryKey: "WeatherRequestURL") as? String,
+              let url = URL(string: requestURL + "?q=\(cityName)" +
                             "&appid=\(EidolonKeys().openWeatherApiKey)&units=metric") else {
             return
         }
-        getWeather(url: url)
+        await getWeather(url: url)
     }
 
-    func getWeatherForCoordinate(coordinate: CLLocationCoordinate2D) {
-        guard let url = URL(string: "https://api.openweathermap.org/data/2.5/weather?lat=\(coordinate.latitude)" +
+    func getWeatherForCoordinate(coordinate: CLLocationCoordinate2D) async {
+        guard let requestURL = Bundle.main.object(forInfoDictionaryKey: "WeatherRequestURL") as? String,
+              let url = URL(string: requestURL + "?lat=\(coordinate.latitude)" +
                             "&lon=\(coordinate.longitude)&appid=\(EidolonKeys().openWeatherApiKey)&units=metric") else {
             return
         }
-        getWeather(url: url)
+        await getWeather(url: url)
     }
 
-    private func getWeather(url: URL) {
+    private func getWeather(url: URL) async {
         let session = URLSession(configuration: .default)
-
-        session.dataTask(with: url) { [weak self] data, _, error in
-            guard let data = data, error == nil else {
-                return
-            }
-
+        
+        do {
+            let (data, _) = try await session.data(from: url)
+            
             let decoder = JSONDecoder()
-
-            do {
-                let decoded = try decoder.decode(WeatherForCity.self, from: data)
-                NotificationCenter.default.post(name: .weatherReturned, object: decoded)
-                self?.weathers.append(decoded)
-            } catch {
-                print(error)
-            }
-        }.resume()
+            
+            let decoded = try decoder.decode(WeatherForCity.self, from: data)
+            weathers.append(decoded)
+        } catch {
+            print(error)
+        }
     }
 }
 

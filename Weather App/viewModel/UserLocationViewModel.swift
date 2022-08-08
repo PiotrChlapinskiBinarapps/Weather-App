@@ -8,20 +8,28 @@
 import Foundation
 import MapKit
 
-class UserLocationViewModel: NSObject, CLLocationManagerDelegate {
+protocol UserLocationViewModel {
+    var userLocation: UserLocation { get }
+    func configureLocationService()
+}
+
+class UserLocationViewModelImpl: NSObject, CLLocationManagerDelegate, UserLocationViewModel {
     private let locationManager = CLLocationManager()
     private let notificationCenter: NotificationCenter = .default
-    var userLocation: UserLocation = .init()
+    var userLocation: UserLocation = UserLocation()
 
     func configureLocationService() {
         locationManager.delegate = self
 
         let status = locationManager.authorizationStatus
-
-        if status == .notDetermined {
+        
+        switch status {
+        case .notDetermined:
             locationManager.requestWhenInUseAuthorization()
-        } else if status == .authorizedAlways || status == .authorizedWhenInUse {
+        case .authorizedAlways, .authorizedWhenInUse:
             beginLocationUpdates(locationManager: locationManager)
+        default:
+            return
         }
     }
 
@@ -40,8 +48,11 @@ class UserLocationViewModel: NSObject, CLLocationManagerDelegate {
     }
 
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
-        if manager.authorizationStatus == .authorizedAlways || manager.authorizationStatus == .authorizedWhenInUse {
+        switch manager.authorizationStatus {
+        case .authorizedAlways, .authorizedWhenInUse:
             beginLocationUpdates(locationManager: manager)
+        default:
+            break
         }
     }
     

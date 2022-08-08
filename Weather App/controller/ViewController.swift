@@ -1,14 +1,14 @@
 import CoreLocation
 import UIKit
 
-class ViewController: UIViewController, UITableViewDataSource {
+class ViewController: UIViewController {
     @IBOutlet var weatherTableView: UITableView!
-    private let userLocationViewModel = UserLocationViewModel()
-    var weatherForCityViewModel: WeatherForCityViewModel = .init()
+    private let userLocationViewModel = UserLocationViewModelImpl()
+    var weatherForCityViewModel: WeatherForCityViewModel = WeatherForCityViewModelImpl()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+
         userLocationViewModel.configureLocationService()
 
         NotificationCenter.default.addObserver(self,
@@ -16,33 +16,24 @@ class ViewController: UIViewController, UITableViewDataSource {
                                                name: .coordinateChanged,
                                                object: nil)
 
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(receivedWeather(_:)),
-                                               name: .weatherReturned,
-                                               object: nil)
         weatherTableView.register(UINib(nibName: "WeatherCell", bundle: nil), forCellReuseIdentifier: "WeatherCell")
         weatherTableView.dataSource = self
         weatherTableView.backgroundColor = .white
     }
 
     @objc func coordinateChanged(_: Notification) {
-        guard let coordinate = userLocationViewModel.userLocation.currentLocation else {
-            return
-        }
-        weatherForCityViewModel.getWeatherForCoordinate(coordinate: coordinate)
-    }
-
-    @objc func receivedWeather(_ notification: Notification) {
-        guard let weather = notification.object as? WeatherForCity else {
-            return
-        }
-        print(weather.mesurements.temperature)
-
-        DispatchQueue.main.async {
-            self.weatherTableView.reloadData()
+        Task {
+            guard let coordinate = userLocationViewModel.userLocation.currentLocation else {
+                return
+            }
+            await weatherForCityViewModel.getWeatherForCoordinate(coordinate: coordinate)
+            
+            weatherTableView.reloadData()
         }
     }
+}
 
+extension ViewController: UITableViewDataSource {
     func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
         return weatherForCityViewModel.weathers.count
     }
