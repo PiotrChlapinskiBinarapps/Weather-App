@@ -241,6 +241,7 @@
 			buildConfigurationList = 4388266E287EC4FD0040E97C /* Build configuration list for PBXNativeTarget "Weather App" */;
 			buildPhases = (
 				C1CCCD4E7B5FB26B81ADCEE8 /* [CP] Check Pods Manifest.lock */,
+				43B5970928A1098A00B7F342 /* SwiftFromat */,
 				432072A52891E17D001F753B /* SwiftLint */,
 				43882640287EC4F90040E97C /* Sources */,
 				43882641287EC4F90040E97C /* Frameworks */,
@@ -384,6 +385,24 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/SwiftLint/swiftlint\"\n";
+		};
+		43B5970928A1098A00B7F342 /* SwiftFromat */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = SwiftFromat;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/SwiftFormat/CommandLineTool/swiftformat\" \"$SRCROOT\"\n";
 		};
 		7BAA5E58B361CCE68E392082 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;

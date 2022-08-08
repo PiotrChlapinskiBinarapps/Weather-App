@@ -8,7 +8,7 @@ class WeatherDetailsViewController: UIViewController {
     @IBOutlet var humidityLabel: UILabel!
     @IBOutlet var weatherDescriptionLabel: UILabel!
     var weather: WeatherForCity?
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         guard let weather = weather else {

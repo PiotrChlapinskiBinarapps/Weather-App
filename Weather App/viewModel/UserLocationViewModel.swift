@@ -16,13 +16,13 @@ protocol UserLocationViewModel {
 class UserLocationViewModelImpl: NSObject, CLLocationManagerDelegate, UserLocationViewModel {
     private let locationManager = CLLocationManager()
     private let notificationCenter: NotificationCenter = .default
-    var userLocation: UserLocation = UserLocation()
+    var userLocation: UserLocation = .init()
 
     func configureLocationService() {
         locationManager.delegate = self
 
         let status = locationManager.authorizationStatus
-        
+
         switch status {
         case .notDetermined:
             locationManager.requestWhenInUseAuthorization()
@@ -55,8 +55,8 @@ class UserLocationViewModelImpl: NSObject, CLLocationManagerDelegate, UserLocati
             break
         }
     }
-    
-    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+
+    func locationManager(_: CLLocationManager, didFailWithError error: Error) {
         print(error)
     }
 }

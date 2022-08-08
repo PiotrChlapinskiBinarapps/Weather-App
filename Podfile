@@ -12,6 +12,7 @@ target 'Weather App' do
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
   pod 'SwiftLint'
+  pod 'SwiftFormat/CLI', '~> 0.49'
 
   # Pods for Weather App
 
