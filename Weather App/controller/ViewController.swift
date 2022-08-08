@@ -18,6 +18,7 @@ class ViewController: UIViewController {
 
         weatherTableView.register(UINib(nibName: "WeatherCell", bundle: nil), forCellReuseIdentifier: "WeatherCell")
         weatherTableView.dataSource = self
+        weatherTableView.delegate = self
         weatherTableView.backgroundColor = .white
     }
 
@@ -54,4 +55,18 @@ extension ViewController: UITableViewDataSource {
 
         return cell
     }
+}
+
+extension ViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+             performSegue(withIdentifier: "WeatherDetails", sender: indexPath)
+         }
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+            guard let segueController = segue.destination as? WeatherDetailsViewController, let sender = sender as? IndexPath else {
+                return
+            }
+            
+            segueController.weather = weatherForCityViewModel.weathers[sender.row]
+        }
 }
