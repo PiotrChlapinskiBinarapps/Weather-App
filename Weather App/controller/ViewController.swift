@@ -12,9 +12,9 @@ class ViewController: UIViewController {
         userLocationViewModel.configureLocationService()
 
         NotificationCenter.default.addObserver(self,
-                                               selector: #selector(coordinateChanged),
-                                               name: .coordinateChanged,
-                                               object: nil)
+           selector: #selector(coordinateChanged),
+           name: .coordinateChanged,
+           object: nil)
 
         weatherTableView.register(UINib(nibName: "WeatherCell", bundle: nil), forCellReuseIdentifier: "WeatherCell")
         weatherTableView.dataSource = self
@@ -43,7 +43,7 @@ extension ViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // Fetch a cell of the appropriate type.
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "WeatherCell", for: indexPath)
-                as? WeatherCell else {
+        as? WeatherCell else {
             return tableView.dequeueReusableCell(withIdentifier: "WeatherCell", for: indexPath)
         }
 
@@ -59,14 +59,14 @@ extension ViewController: UITableViewDataSource {
 
 extension ViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-             performSegue(withIdentifier: "WeatherDetails", sender: indexPath)
-         }
+        performSegue(withIdentifier: "WeatherDetails", sender: indexPath)
+    }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-            guard let segueController = segue.destination as? WeatherDetailsViewController, let sender = sender as? IndexPath else {
-                return
-            }
-            
-            segueController.weather = weatherForCityViewModel.weathers[sender.row]
+        guard let segueController = segue.destination as? WeatherDetailsViewController, let sender = sender as? IndexPath else {
+            return
         }
+        
+        segueController.weather = weatherForCityViewModel.weathers[sender.row]
+    }
 }

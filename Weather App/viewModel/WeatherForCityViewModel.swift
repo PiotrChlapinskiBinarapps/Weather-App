@@ -21,7 +21,7 @@ class WeatherForCityViewModelImpl: WeatherForCityViewModel {
     func getWeatherForCity(cityName: String) async {
         guard let requestURL = Bundle.main.object(forInfoDictionaryKey: "WeatherRequestURL") as? String,
               let url = URL(string: requestURL + "?q=\(cityName)" +
-                            "&appid=\(EidolonKeys().openWeatherApiKey)&units=metric") else {
+                "&appid=\(EidolonKeys().openWeatherApiKey)&units=metric") else {
             return
         }
         await getWeather(url: url)
