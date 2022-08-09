@@ -1,13 +1,16 @@
 PODS:
   - Keys (1.0.1)
+  - SwiftFormat/CLI (0.49.13)
   - SwiftLint (0.47.1)
 
 DEPENDENCIES:
   - Keys (from `Pods/CocoaPodsKeys`)
+  - SwiftFormat/CLI (~> 0.49)
   - SwiftLint
 
 SPEC REPOS:
   trunk:
+    - SwiftFormat
     - SwiftLint
 
 EXTERNAL SOURCES:
@@ -16,8 +19,9 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Keys: a576f4c9c1c641ca913a959a9c62ed3f215a8de9
+  SwiftFormat: 53864d9acbae3a954eb413736729500fe7051435
   SwiftLint: f80f1be7fa96d30e0aa68e58d45d4ea1ccaac519
 
-PODFILE CHECKSUM: d617e1e24cc62a512e8e2e9e7ffaaea31272652c
+PODFILE CHECKSUM: 450e4f3e26cc9fb33693f02bfabc861a1e9f2c59
 
 COCOAPODS: 1.11.3
