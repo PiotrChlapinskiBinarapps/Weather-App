@@ -5,6 +5,9 @@ disabled_rules:
 opt_in_rules:
   - file_header
   - indentation_width
+  
+excluded:
+  - Pods
 
 file_length: 660
 function_parameter_count: 10

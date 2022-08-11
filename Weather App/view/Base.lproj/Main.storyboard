@@ -76,10 +76,10 @@
             </objects>
             <point key="canvasLocation" x="1091" y="863"/>
         </scene>
-        <!--View Controller-->
+        <!--Search Tab View Controller-->
         <scene sceneID="MkB-fF-ra6">
             <objects>
-                <viewController id="5ot-Xz-nBS" sceneMemberID="viewController">
+                <viewController id="5ot-Xz-nBS" customClass="SearchTabViewController" customModule="Weather_App" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="iFf-n2-cBT">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
