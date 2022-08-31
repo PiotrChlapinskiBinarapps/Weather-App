@@ -42,12 +42,12 @@ extension SearchTabViewController {
         tableView.dataSource = self
         tableView.delegate = self
 
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: Constants.searchCellIdentifier)
 
         view.addSubview(tableView)
 
         tableView.snp.makeConstraints { make in
-            make.leading.right.equalToSuperview().inset(5)
+            make.leading.right.equalToSuperview().inset(Constants.tableViewLeadingTrailing)
             make.top.equalTo(searchTextField.snp_bottomMargin).inset(-30)
             make.bottom.equalTo(view.snp_bottomMargin).inset(10)
         }
@@ -56,7 +56,7 @@ extension SearchTabViewController {
 
 extension SearchTabViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: Constants.searchCellIdentifier, for: indexPath)
         cell.textLabel?.text = dataToDispaly[indexPath.row]
         cell.backgroundColor = .systemGray2
         cell.selectionStyle = .none
