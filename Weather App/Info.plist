@@ -2,10 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>Author</key>
-	<string>Piotr Chłapiński</string>
-	<key>App description</key>
-	<string>Weather App is application for checking weather in user&apos;s location or selected cities by user. Weather app provides information like humidity, pressure, temperature and short description.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>We need your location</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
