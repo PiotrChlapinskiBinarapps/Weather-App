@@ -50,15 +50,3 @@ class WeatherForCityViewModelImpl: WeatherForCityViewModel {
         }
     }
 }
-
-extension Notification.Name {
-    static var weatherReturned: Notification.Name {
-        return .init(rawValue: "WeatherForCityViewModel.weatherReturned")
-    }
-}
-
-extension String {
-    func removeDiacratics() -> String {
-        return folding(options: .diacriticInsensitive, locale: Locale(identifier: "en_us")).lowercased().replacingOccurrences(of: "ł", with: "l")
-    }
-}

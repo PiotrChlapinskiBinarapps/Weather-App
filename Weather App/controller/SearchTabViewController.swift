@@ -2,64 +2,97 @@ import SnapKit
 import UIKit
 
 class SearchTabViewController: UIViewController {
-    private var searchTextField: UISearchBar!
-    private var tableView: UITableView!
-    private let cities = ["Łódź", "Warszawa", "Kraków", "Wrocław", "Gdańsk", "Gdynia", "Bydgoszcz", "Sopot", "Kielce"]
-    private var dataToDispaly: [String]!
+    private var searchBar: UISearchBar = {
+        let searchBar = UISearchBar()
+        searchBar.layer.cornerRadius = 15.0
+        searchBar.placeholder = Texts.searchPlaceHolderText
+        searchBar.searchBarStyle = .minimal
+        let textFieldInsideSearchBar = searchBar.value(forKey: Constants.searchTextFieldKey) as? UITextField
+        textFieldInsideSearchBar?.textColor = .white
+        return searchBar
+    }()
+
+    private var tableView: UITableView = {
+        let tableView = UITableView(frame: .zero, style: .insetGrouped)
+        tableView.register(SearchViewCell.self, forCellReuseIdentifier: Constants.searchCellIdentifier)
+        return tableView
+    }()
+
+    private var titleLabel: UILabel = {
+        let titleLabel = UILabel()
+        titleLabel.text = Texts.searchTitleLableText
+        titleLabel.textColor = .custom(.white)
+        titleLabel.font = UIFont.boldSystemFont(ofSize: Constants.fontSizeTitle)
+        return titleLabel
+    }()
+
+    private var cities: [City] = []
+    private var dataToDispaly: [City]!
+    private var citiesProvider: CitiesProvider
+
+    required init?(coder: NSCoder) {
+        citiesProvider = CitiesProvider()
+        cities = citiesProvider.fetchCities()
+        super.init(coder: coder)
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .systemCyan
+        view.backgroundColor = .custom(.black)
 
         dataToDispaly = cities
 
-        configureTextField()
-        configureTable()
+        configureView()
     }
 }
 
 extension SearchTabViewController {
-    private func configureTextField() {
-        searchTextField = UISearchBar()
-        searchTextField.barTintColor = .systemCyan
-        searchTextField.layer.cornerRadius = 15.0
-        searchTextField.placeholder = "Search City"
-        searchTextField.searchBarStyle = .minimal
-        searchTextField.delegate = self
+    private func configureSearchBar() {
+        searchBar.delegate = self
+        view.addSubview(searchBar)
 
-        view.addSubview(searchTextField)
-
-        searchTextField.snp.makeConstraints { make in
-            make.height.equalTo(60)
-            make.leading.trailing.equalToSuperview().inset(16)
-            make.top.equalTo(view.snp_topMargin)
+        searchBar.snp.makeConstraints { make in
+            make.height.equalTo(Constants.searchBarHight)
+            make.leading.trailing.equalToSuperview().inset(Constants.searchBarLeadingTrailing)
+            make.top.equalTo(titleLabel.snp_bottomMargin).inset(Constants.searchBarTop)
         }
     }
 
     private func configureTable() {
-        tableView = UITableView(frame: .zero, style: .insetGrouped)
-        tableView.backgroundColor = .systemCyan
         tableView.dataSource = self
         tableView.delegate = self
-
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: Constants.searchCellIdentifier)
+        // We need set color for table view background here, because in init this variable is set color on white
+        tableView.backgroundColor = .app(.primary)
 
         view.addSubview(tableView)
 
         tableView.snp.makeConstraints { make in
             make.leading.right.equalToSuperview().inset(Constants.tableViewLeadingTrailing)
-            make.top.equalTo(searchTextField.snp_bottomMargin).inset(-30)
-            make.bottom.equalTo(view.snp_bottomMargin).inset(10)
+            make.top.equalTo(searchBar.snp_bottomMargin).inset(Constants.tableViewTop)
+            make.bottom.equalTo(view.snp_bottomMargin)
+        }
+    }
+
+    func configureView() {
+        view.addSubview(titleLabel)
+
+        configureSearchBar()
+        configureTable()
+
+        titleLabel.snp.makeConstraints { make in
+            make.leading.trailing.equalToSuperview().inset(Constants.titleLabelLeadingTrailing)
+            make.top.equalTo(view.snp_topMargin)
         }
     }
 }
 
 extension SearchTabViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: Constants.searchCellIdentifier, for: indexPath)
-        cell.textLabel?.text = dataToDispaly[indexPath.row]
-        cell.backgroundColor = .systemGray2
-        cell.selectionStyle = .none
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: Constants.searchCellIdentifier, for: indexPath) as? SearchViewCell else {
+            return UITableViewCell()
+        }
+        cell.cityName.text = dataToDispaly[indexPath.row].name
+        cell.countryName.text = dataToDispaly[indexPath.row].country
         return cell
     }
 
@@ -74,15 +107,15 @@ extension SearchTabViewController: UITableViewDelegate {
             return
         }
 
-        viewController.addCity(name: dataToDispaly[indexPath.row])
+        viewController.addCity(name: dataToDispaly[indexPath.row].name)
         tabBarController?.selectedIndex = 0
     }
 }
 
 extension SearchTabViewController: UISearchBarDelegate {
     func searchBar(_: UISearchBar, textDidChange searchText: String) {
-        dataToDispaly = searchText.isEmpty ? cities : cities.filter { (item: String) -> Bool in
-            item.range(of: searchText, options: [.caseInsensitive, .diacriticInsensitive], range: nil, locale: nil) != nil
+        dataToDispaly = searchText.isEmpty ? cities : cities.filter { (item: City) -> Bool in
+            item.name.range(of: searchText, options: [.caseInsensitive, .diacriticInsensitive], range: nil, locale: nil) != nil
         }
         tableView.reloadData()
     }
