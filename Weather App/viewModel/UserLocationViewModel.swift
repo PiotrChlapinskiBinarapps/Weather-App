@@ -1,10 +1,3 @@
-//
-//  UserLocationViewModel.swift
-//  Weather App
-//
-//  Created by Piotr Chlapinski on 21/07/2022.
-//
-
 import Foundation
 import MapKit
 
@@ -34,7 +27,7 @@ class UserLocationViewModelImpl: NSObject, CLLocationManagerDelegate, UserLocati
     }
 
     func beginLocationUpdates(locationManager: CLLocationManager) {
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.desiredAccuracy = kCLLocationAccuracyThreeKilometers
         locationManager.requestLocation()
     }
 

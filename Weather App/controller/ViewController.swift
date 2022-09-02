@@ -32,6 +32,14 @@ class ViewController: UIViewController {
             weatherTableView.reloadData()
         }
     }
+
+    func addCity(name: String) {
+        Task {
+            await weatherForCityViewModel.getWeatherForCity(cityName: name)
+
+            weatherTableView.reloadData()
+        }
+    }
 }
 
 extension ViewController: UITableViewDataSource {
@@ -39,7 +47,6 @@ extension ViewController: UITableViewDataSource {
         return weatherForCityViewModel.weathers.count
     }
 
-    // Provide a cell object for each row.
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // Fetch a cell of the appropriate type.
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "WeatherCell", for: indexPath)
@@ -48,8 +55,6 @@ extension ViewController: UITableViewDataSource {
             return tableView.dequeueReusableCell(withIdentifier: "WeatherCell", for: indexPath)
         }
 
-        // Configure the cell’s contents.
-        print(weatherForCityViewModel.weathers[indexPath.row].name)
         let name = weatherForCityViewModel.weathers[indexPath.row].name
         cell.cityLabel.text = name
         cell.degreeLabel.text = "\(weatherForCityViewModel.weathers[indexPath.row].mesurements.temperature) °C"

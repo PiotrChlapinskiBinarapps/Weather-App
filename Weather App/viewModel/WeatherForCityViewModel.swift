@@ -1,10 +1,3 @@
-//
-//  WeatherForCityViewModel.swift
-//  Weather App
-//
-//  Created by Piotr Chlapinski on 20/07/2022.
-//
-
 import CoreLocation
 import Foundation
 import Keys
@@ -19,9 +12,13 @@ class WeatherForCityViewModelImpl: WeatherForCityViewModel {
     var weathers: [WeatherForCity] = []
 
     func getWeatherForCity(cityName: String) async {
-        guard let requestURL = Bundle.main.object(forInfoDictionaryKey: "WeatherRequestURL") as? String,
-              let url = URL(string: requestURL + "?q=\(cityName)" +
-                  "&appid=\(EidolonKeys().openWeatherApiKey)&units=metric")
+        let city = cityName.removeDiacratics()
+        let isContained = weathers.contains {
+            $0.name.removeDiacratics() == city
+        }
+        guard !isContained, let requestURL = Bundle.main.object(forInfoDictionaryKey: "WeatherRequestURL") as? String,
+              let url = URL(string: requestURL + "?q=\(city)" +
+                  "&appid=\(Weather_AppKeys().openWeatherApiKey)&units=metric")
         else {
             return
         }
@@ -31,7 +28,7 @@ class WeatherForCityViewModelImpl: WeatherForCityViewModel {
     func getWeatherForCoordinate(coordinate: CLLocationCoordinate2D) async {
         guard let requestURL = Bundle.main.object(forInfoDictionaryKey: "WeatherRequestURL") as? String,
               let url = URL(string: requestURL + "?lat=\(coordinate.latitude)" +
-                  "&lon=\(coordinate.longitude)&appid=\(EidolonKeys().openWeatherApiKey)&units=metric")
+                  "&lon=\(coordinate.longitude)&appid=\(Weather_AppKeys().openWeatherApiKey)&units=metric")
         else {
             return
         }
@@ -51,11 +48,5 @@ class WeatherForCityViewModelImpl: WeatherForCityViewModel {
         } catch {
             print(error)
         }
-    }
-}
-
-extension Notification.Name {
-    static var weatherReturned: Notification.Name {
-        return .init(rawValue: "WeatherForCityViewModel.weatherReturned")
     }
 }

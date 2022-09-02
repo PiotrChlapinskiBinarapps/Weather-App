@@ -13,6 +13,7 @@ target 'Weather App' do
   use_frameworks!
   pod 'SwiftLint'
   pod 'SwiftFormat/CLI', '~> 0.49'
+  pod 'SnapKit', '~> 5.6.0'
 
   # Pods for Weather App
 
