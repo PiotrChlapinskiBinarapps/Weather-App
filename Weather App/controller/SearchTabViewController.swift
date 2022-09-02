@@ -120,3 +120,35 @@ extension SearchTabViewController: UISearchBarDelegate {
         tableView.reloadData()
     }
 }
+
+private struct Constants {
+    private init() {}
+
+    static let fontSizeTitle: CGFloat = 30
+
+    // MARK: - TableView's Constants
+
+    static let tableViewLeadingTrailing: CGFloat = -10
+    static let tableViewTop = -10
+
+    // MARK: - SearchBar's Constants
+
+    static let searchCellIdentifier = "searchCell"
+    static let searchTextFieldKey = "searchField"
+    static let searchBarHight: Int = 60
+    static let searchBarLeadingTrailing = 10
+    static let searchBarTop = -10
+
+    // MARK: - Title Label's Constants
+
+    static let titleLabelLeadingTrailing = 16
+}
+
+private struct Texts {
+    private init() {}
+
+    // MARK: - SearchTabViewController's texts
+
+    static let searchPlaceHolderText = "SearchCity"
+    static let searchTitleLableText = "Search Location"
+}

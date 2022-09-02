@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		430039D928C1CFDD0065D5B6 /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 430039D828C1CFDD0065D5B6 /* UIColor+Extensions.swift */; };
 		430039DD28C1DA8E0065D5B6 /* city.list.json in Resources */ = {isa = PBXBuildFile; fileRef = 430039DC28C1DA8E0065D5B6 /* city.list.json */; };
-		431141A728B77FFE005437E4 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 431141A628B77FFE005437E4 /* Constants.swift */; };
 		431E239F28A3B42300EAE5AF /* SearchTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 431E239E28A3B42300EAE5AF /* SearchTabViewController.swift */; };
 		432B5DF5288F05FD00B9D220 /* WeatherCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 432B5DF4288F05FD00B9D220 /* WeatherCell.swift */; };
 		434A3CFC288EBF4400FCD22D /* WeatherCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 434A3CFB288EBF4400FCD22D /* WeatherCell.xib */; };
@@ -70,7 +69,6 @@
 		41EF4DE8CC5B86837E85A0F6 /* Pods-Weather AppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Weather AppTests.debug.xcconfig"; path = "Target Support Files/Pods-Weather AppTests/Pods-Weather AppTests.debug.xcconfig"; sourceTree = "<group>"; };
 		430039D828C1CFDD0065D5B6 /* UIColor+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
 		430039DC28C1DA8E0065D5B6 /* city.list.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = city.list.json; sourceTree = "<group>"; };
-		431141A628B77FFE005437E4 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		431E239E28A3B42300EAE5AF /* SearchTabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTabViewController.swift; sourceTree = "<group>"; };
 		432B5DF4288F05FD00B9D220 /* WeatherCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherCell.swift; sourceTree = "<group>"; };
 		434A3CFB288EBF4400FCD22D /* WeatherCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WeatherCell.xib; sourceTree = "<group>"; };
@@ -212,7 +210,6 @@
 				43FA11352881600E0014C409 /* WeatherForCity.swift */,
 				43579CE92889263D0077E7D0 /* UserLocation.swift */,
 				437BD1C9288AA71300005C7E /* Location.swift */,
-				431141A628B77FFE005437E4 /* Constants.swift */,
 				43B26C1028C08AF2002F3521 /* CitiesProvider.swift */,
 				43B26CBC28C0E120002F3521 /* Cities.swift */,
 			);
@@ -560,7 +557,6 @@
 				431E239F28A3B42300EAE5AF /* SearchTabViewController.swift in Sources */,
 				43B26C1128C08AF2002F3521 /* CitiesProvider.swift in Sources */,
 				430039D928C1CFDD0065D5B6 /* UIColor+Extensions.swift in Sources */,
-				431141A728B77FFE005437E4 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

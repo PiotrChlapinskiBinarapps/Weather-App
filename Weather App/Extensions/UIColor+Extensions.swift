@@ -24,7 +24,7 @@ public extension UIColor {
 
         // 255 0 0 #ff0000
         case red
-        
+
         // 255 255 255 #ffffff
         case white
 
