@@ -7,6 +7,7 @@ protocol WeatherForCityViewModel {
     var weatherForLocation: WeatherForCity? { get }
     func getWeatherForCity(cityName: String) async
     func getWeatherForCoordinate(coordinate: CLLocationCoordinate2D) async
+    func removeWeather(index: Int)
 }
 
 class WeatherForCityViewModelImpl: WeatherForCityViewModel {
@@ -67,5 +68,9 @@ class WeatherForCityViewModelImpl: WeatherForCityViewModel {
             $0.name.removeDiacratics() == city
         }
         return !isContained
+    }
+
+    func removeWeather(index: Int) {
+        weathers.remove(at: index)
     }
 }

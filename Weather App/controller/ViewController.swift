@@ -97,6 +97,23 @@ extension ViewController: UITableViewDataSource {
 
         return cell
     }
+
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if weatherForCityViewModel.weatherForLocation != nil, indexPath == IndexPath(row: 0, section: 0) {
+            return
+        }
+
+        if editingStyle == .delete {
+            weatherForCityViewModel.removeWeather(index: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .fade)
+            let citiesNames = weatherForCityViewModel.weathers.map { $0.name }
+            do {
+                try storage.save(cities: citiesNames)
+            } catch {
+                print(error)
+            }
+        }
+    }
 }
 
 extension ViewController: UITableViewDelegate {
