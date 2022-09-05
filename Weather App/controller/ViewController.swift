@@ -4,17 +4,23 @@ import UIKit
 class ViewController: UIViewController {
     @IBOutlet var weatherTableView: UITableView!
     private let userLocationViewModel = UserLocationViewModelImpl()
+    private let storage = StorageUserDefaults()
     var weatherForCityViewModel: WeatherForCityViewModel = WeatherForCityViewModelImpl()
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
         userLocationViewModel.configureLocationService()
 
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(coordinateChanged),
                                                name: .coordinateChanged,
                                                object: nil)
+        storage.fetchList().forEach { addCityCell(name: $0) }
+    }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
 
         weatherTableView.register(UINib(nibName: "WeatherCell", bundle: nil), forCellReuseIdentifier: "WeatherCell")
         weatherTableView.dataSource = self
@@ -33,31 +39,61 @@ class ViewController: UIViewController {
         }
     }
 
-    func addCity(name: String) {
+    private func addCityCell(name: String) {
         Task {
             await weatherForCityViewModel.getWeatherForCity(cityName: name)
 
             weatherTableView.reloadData()
         }
     }
+
+    func addCity(name: String) {
+        var citiesNames = weatherForCityViewModel.weathers.map { $0.name }
+        citiesNames.append(name)
+        do {
+            try storage.save(cities: citiesNames)
+        } catch {
+            print(error)
+        }
+        addCityCell(name: name)
+    }
 }
 
 extension ViewController: UITableViewDataSource {
-    func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
+    public func numberOfSections(in _: UITableView) -> Int {
+        return 2
+    }
+
+    public func tableView(_: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if section == 0 {
+            return weatherForCityViewModel.weatherForLocation == nil ? 0 : 1
+        }
+
         return weatherForCityViewModel.weathers.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        // Fetch a cell of the appropriate type.
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "WeatherCell", for: indexPath)
             as? WeatherCell
         else {
             return tableView.dequeueReusableCell(withIdentifier: "WeatherCell", for: indexPath)
         }
+        let name: String
+        let degree: String
 
-        let name = weatherForCityViewModel.weathers[indexPath.row].name
+        if indexPath.section == 0 {
+            guard let weather = weatherForCityViewModel.weatherForLocation else {
+                return UITableViewCell()
+            }
+            name = weather.name
+            degree = "\(weather.mesurements.temperature)"
+        } else {
+            name = weatherForCityViewModel.weathers[indexPath.row].name
+            degree = "\(weatherForCityViewModel.weathers[indexPath.row].mesurements.temperature)"
+        }
+
         cell.cityLabel.text = name
-        cell.degreeLabel.text = "\(weatherForCityViewModel.weathers[indexPath.row].mesurements.temperature) °C"
+        cell.degreeLabel.text = "\(degree) °C"
 
         return cell
     }
@@ -72,7 +108,10 @@ extension ViewController: UITableViewDelegate {
         guard let segueController = segue.destination as? WeatherDetailsViewController, let sender = sender as? IndexPath else {
             return
         }
-
-        segueController.weather = weatherForCityViewModel.weathers[sender.row]
+        if sender == IndexPath(row: 0, section: 0), weatherForCityViewModel.weatherForLocation != nil {
+            segueController.weather = weatherForCityViewModel.weatherForLocation
+        } else {
+            segueController.weather = weatherForCityViewModel.weathers[sender.row]
+        }
     }
 }
