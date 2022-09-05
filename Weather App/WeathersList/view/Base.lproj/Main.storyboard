@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="QxA-t5-knc">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -15,6 +16,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+<<<<<<< HEAD:Weather App/WeathersList/view/Base.lproj/Main.storyboard
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="wVW-1N-Vr3">
                                 <rect key="frame" x="0.0" y="62" width="600" height="489"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -24,20 +26,35 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Weather" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Paz-Ku-ral">
                                 <rect key="frame" x="20" y="0.0" width="560" height="42"/>
                                 <fontDescription key="fontDescription" type="italicSystem" pointSize="35"/>
+=======
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" image="main_background" translatesAutoresizingMaskIntoConstraints="NO" id="qEg-Rs-2fY">
+                                <rect key="frame" x="0.0" y="80" width="414" height="733"/>
+                            </imageView>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="singleLineEtched" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="wVW-1N-Vr3">
+                                <rect key="frame" x="0.0" y="100" width="414" height="713"/>
+                                <color key="backgroundColor" red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <sections/>
+                            </tableView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Weather" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Paz-Ku-ral">
+                                <rect key="frame" x="20" y="44" width="374" height="36"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="30"/>
+>>>>>>> 5a16c20 (Redesign view):Weather App/view/Base.lproj/Main.storyboard
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
-                        <color key="backgroundColor" systemColor="systemCyanColor"/>
                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="qEg-Rs-2fY" firstAttribute="top" secondItem="Paz-Ku-ral" secondAttribute="bottom" id="7Pu-N6-uNf"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="qEg-Rs-2fY" secondAttribute="trailing" id="HB5-Ir-eF1"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="wVW-1N-Vr3" secondAttribute="trailing" id="LJA-Lk-q1V"/>
                             <constraint firstItem="wVW-1N-Vr3" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="RMK-f9-zuz"/>
                             <constraint firstItem="Paz-Ku-ral" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Ryb-vj-8jz"/>
+                            <constraint firstItem="qEg-Rs-2fY" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="TAZ-IG-uoc"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="qEg-Rs-2fY" secondAttribute="bottom" id="TfJ-9G-VP1"/>
                             <constraint firstItem="Paz-Ku-ral" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="Zy2-IK-Ed8"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="wVW-1N-Vr3" secondAttribute="bottom" id="ddf-wB-pSZ"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Paz-Ku-ral" secondAttribute="trailing" constant="20" id="ezw-7F-gNW"/>
                             <constraint firstItem="Paz-Ku-ral" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="hyD-Dj-j1p"/>
                             <constraint firstItem="wVW-1N-Vr3" firstAttribute="top" secondItem="Paz-Ku-ral" secondAttribute="bottom" constant="20" id="t5O-TH-WdQ"/>
                         </constraints>
@@ -102,6 +119,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="City Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9sF-QA-bdy">
+<<<<<<< HEAD:Weather App/WeathersList/view/Base.lproj/Main.storyboard
                                 <rect key="frame" x="180.5" y="30" width="239" height="60"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="50"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -110,14 +128,25 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="20 C" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7vW-PY-dQF">
                                 <rect key="frame" x="256" y="100" width="88.5" height="48"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="40"/>
+=======
+                                <rect key="frame" x="85.5" y="74" width="157" height="42"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="35"/>
+>>>>>>> 5a16c20 (Redesign view):Weather App/view/Base.lproj/Main.storyboard
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <stackView opaque="NO" multipleTouchEnabled="YES" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="NV2-gh-jAn">
+<<<<<<< HEAD:Weather App/WeathersList/view/Base.lproj/Main.storyboard
                                 <rect key="frame" x="20" y="188" width="560" height="72"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="6ok-Zb-8BK">
                                         <rect key="frame" x="0.0" y="0.0" width="560" height="36"/>
+=======
+                                <rect key="frame" x="20" y="266" width="287.5" height="72"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="6ok-Zb-8BK">
+                                        <rect key="frame" x="0.0" y="0.0" width="287.5" height="36"/>
+>>>>>>> 5a16c20 (Redesign view):Weather App/view/Base.lproj/Main.storyboard
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pressure" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tQI-Re-b2A">
                                                 <rect key="frame" x="0.0" y="0.0" width="124" height="36"/>
@@ -126,7 +155,11 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1020 hPa" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S9I-Fy-byl">
+<<<<<<< HEAD:Weather App/WeathersList/view/Base.lproj/Main.storyboard
                                                 <rect key="frame" x="427.5" y="0.0" width="132.5" height="36"/>
+=======
+                                                <rect key="frame" x="155" y="0.0" width="132.5" height="36"/>
+>>>>>>> 5a16c20 (Redesign view):Weather App/view/Base.lproj/Main.storyboard
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="30"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
@@ -134,7 +167,11 @@
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="2VW-a3-dFH">
+<<<<<<< HEAD:Weather App/WeathersList/view/Base.lproj/Main.storyboard
                                         <rect key="frame" x="0.0" y="36" width="560" height="36"/>
+=======
+                                        <rect key="frame" x="0.0" y="36" width="287.5" height="36"/>
+>>>>>>> 5a16c20 (Redesign view):Weather App/view/Base.lproj/Main.storyboard
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Humidity" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v31-LJ-bAh">
                                                 <rect key="frame" x="0.0" y="0.0" width="127.5" height="36"/>
@@ -143,7 +180,11 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="100 %" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BDa-id-E2W">
+<<<<<<< HEAD:Weather App/WeathersList/view/Base.lproj/Main.storyboard
                                                 <rect key="frame" x="471.5" y="0.0" width="88.5" height="36"/>
+=======
+                                                <rect key="frame" x="199" y="0.0" width="88.5" height="36"/>
+>>>>>>> 5a16c20 (Redesign view):Weather App/view/Base.lproj/Main.storyboard
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="30"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
@@ -153,27 +194,53 @@
                                 </subviews>
                             </stackView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Description Weather" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u77-ob-9yc">
+<<<<<<< HEAD:Weather App/WeathersList/view/Base.lproj/Main.storyboard
                                 <rect key="frame" x="20" y="280" width="560" height="36"/>
+=======
+                                <rect key="frame" x="20" y="358" width="287.5" height="36"/>
+>>>>>>> 5a16c20 (Redesign view):Weather App/view/Base.lproj/Main.storyboard
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="30"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="7RW-o6-af7">
+                                <rect key="frame" x="40" y="126" width="247.5" height="100"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="kJV-P6-GF0">
+                                        <rect key="frame" x="0.0" y="-4.5" width="120" height="105.5"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="100" id="glo-JF-VL2"/>
+                                            <constraint firstAttribute="width" constant="100" id="kux-Gy-ij6"/>
+                                        </constraints>
+                                        <imageReference key="image" image="cloud.sun.fill" catalog="system" symbolScale="large" renderingMode="original"/>
+                                        <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large"/>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="20 C" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7vW-PY-dQF">
+                                        <rect key="frame" x="129" y="26" width="118.5" height="48"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="40"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="KQg-xy-Kva"/>
-                        <color key="backgroundColor" systemColor="systemCyanColor"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.94675226586102723" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="NV2-gh-jAn" firstAttribute="leading" secondItem="KQg-xy-Kva" secondAttribute="leading" constant="20" id="4Uy-ww-F4Y"/>
                             <constraint firstItem="NV2-gh-jAn" firstAttribute="centerX" secondItem="z8F-cV-OdO" secondAttribute="centerX" id="82s-q9-xIh"/>
-                            <constraint firstItem="7vW-PY-dQF" firstAttribute="top" secondItem="9sF-QA-bdy" secondAttribute="bottom" constant="10" id="Dft-Kh-t30"/>
                             <constraint firstItem="u77-ob-9yc" firstAttribute="centerX" secondItem="z8F-cV-OdO" secondAttribute="centerX" id="G3c-Dt-b9W"/>
-                            <constraint firstItem="NV2-gh-jAn" firstAttribute="top" secondItem="7vW-PY-dQF" secondAttribute="bottom" constant="40" id="Ojp-LW-b0E"/>
+                            <constraint firstItem="KQg-xy-Kva" firstAttribute="trailing" secondItem="7RW-o6-af7" secondAttribute="trailing" constant="40" id="NEV-tm-0un"/>
                             <constraint firstItem="9sF-QA-bdy" firstAttribute="top" secondItem="KQg-xy-Kva" secondAttribute="top" constant="30" id="Pij-rh-7A8"/>
+                            <constraint firstItem="7RW-o6-af7" firstAttribute="leading" secondItem="KQg-xy-Kva" secondAttribute="leading" constant="40" id="SIR-oj-DXk"/>
                             <constraint firstItem="9sF-QA-bdy" firstAttribute="centerX" secondItem="z8F-cV-OdO" secondAttribute="centerX" id="UvC-3i-V40"/>
                             <constraint firstItem="KQg-xy-Kva" firstAttribute="trailing" secondItem="NV2-gh-jAn" secondAttribute="trailing" constant="20" id="Z09-PK-u2R"/>
-                            <constraint firstItem="KQg-xy-Kva" firstAttribute="trailing" secondItem="u77-ob-9yc" secondAttribute="trailing" constant="20" id="faC-7m-1nx"/>
+                            <constraint firstItem="7RW-o6-af7" firstAttribute="top" secondItem="9sF-QA-bdy" secondAttribute="bottom" constant="10" id="f1z-Ze-1py"/>
                             <constraint firstItem="u77-ob-9yc" firstAttribute="leading" secondItem="KQg-xy-Kva" secondAttribute="leading" constant="20" id="jBA-Fw-u1k"/>
+                            <constraint firstItem="7RW-o6-af7" firstAttribute="centerX" secondItem="z8F-cV-OdO" secondAttribute="centerX" id="kVJ-9b-XED"/>
                             <constraint firstItem="u77-ob-9yc" firstAttribute="top" secondItem="NV2-gh-jAn" secondAttribute="bottom" constant="20" id="oEN-iY-gbk"/>
-                            <constraint firstItem="7vW-PY-dQF" firstAttribute="centerX" secondItem="z8F-cV-OdO" secondAttribute="centerX" id="wjV-QQ-auh"/>
+                            <constraint firstItem="7RW-o6-af7" firstAttribute="centerX" secondItem="z8F-cV-OdO" secondAttribute="centerX" id="piR-Ub-dnA"/>
+                            <constraint firstItem="NV2-gh-jAn" firstAttribute="top" secondItem="7RW-o6-af7" secondAttribute="bottom" constant="40" id="wad-Ul-zKh"/>
                         </constraints>
                     </view>
                     <connections>
@@ -196,9 +263,9 @@
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="yEf-Jz-gBE">
                         <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="backgroundColor" systemColor="systemCyanColor"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <color key="tintColor" systemColor="systemCyanColor"/>
-                        <color key="barTintColor" systemColor="systemCyanColor"/>
+                        <color key="barTintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <color key="selectedImageTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
                     <connections>
@@ -215,6 +282,8 @@
     <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
     <resources>
         <image name="applescript" catalog="system" width="102" height="128"/>
+        <image name="cloud.sun.fill" catalog="system" width="128" height="95"/>
+        <image name="main_background" width="1242" height="2688"/>
         <image name="sun.min.fill" catalog="system" width="128" height="121"/>
         <systemColor name="systemCyanColor">
             <color red="0.19607843137254902" green="0.67843137254901964" blue="0.90196078431372551" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

@@ -31,7 +31,7 @@ class WeathersListViewController: UIViewController {
         weatherTableView.register(UINib(nibName: "WeatherCell", bundle: nil), forCellReuseIdentifier: "WeatherCell")
         weatherTableView.dataSource = self
         weatherTableView.delegate = self
-        weatherTableView.backgroundColor = .white
+        weatherTableView.backgroundColor = .clear
     }
 
     @objc func coordinateChanged(_: Notification) {
@@ -73,7 +73,7 @@ extension WeathersListViewController: UITableViewDataSource {
                 return UITableViewCell()
             }
             name = weather.name
-            degree = "\(weather.mesurements.temperature)"
+            degree = "\(Int(weather.mesurements.temperature))"
         } else {
             name = cityWeatherViewModel.weathers[indexPath.row].name
             degree = "\(cityWeatherViewModel.weathers[indexPath.row].mesurements.temperature)"

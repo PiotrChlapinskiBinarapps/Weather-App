@@ -5,10 +5,12 @@ public struct CityWeather: Decodable {
     let mesurements: Mesurements
     let description: [Description]
     let name: String
+    let sun: Sun
 
     private enum CodingKeys: String, CodingKey {
         case mesurements = "main"
         case description = "weather"
+        case sun = "sys"
         case name
     }
 }
@@ -33,4 +35,9 @@ public struct Description: Decodable {
         case descriptionWeather = "description"
         case main
     }
+}
+
+struct Sun: Decodable {
+    let sunrise: Date
+    let sunset: Date
 }
