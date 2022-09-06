@@ -1,8 +1,14 @@
 import Foundation
 
+/// Protocol  for saving and fetching City objects
 public protocol Storage {
-    func fetchList() throws -> [String]
-    func save(cities: [String]) throws
+    /// Return list of City objects
+    func fetchList() throws -> [City]
+
+    /// Save given list of City objects
+    /// - Parameters:
+    ///   - cities: List of City to saved.
+    func save(cities: [City]) throws
 }
 
 public struct StorageUserDefaults: Storage {
@@ -10,13 +16,21 @@ public struct StorageUserDefaults: Storage {
 
     public init() {}
 
-    public func save(cities: [String]) throws {
-        storage.set(cities, forKey: Constants.rootIdentifier)
+    public func save(cities: [City]) throws {
+        let encoder = JSONEncoder()
+        guard let encoded = try? encoder.encode(cities) else {
+            return
+        }
+
+        storage.set(encoded, forKey: Constants.rootIdentifier)
     }
 
-    public func fetchList() -> [String] {
-        let cities = storage.object(forKey: Constants.rootIdentifier) as? [String] ?? []
-        return cities
+    public func fetchList() -> [City] {
+        let decoder = JSONDecoder()
+        guard let savedCities = storage.object(forKey: Constants.rootIdentifier) as? Data, let loadedCities = try? decoder.decode([City].self, from: savedCities) else {
+            return []
+        }
+        return loadedCities
     }
 
     private enum Error: Swift.Error {

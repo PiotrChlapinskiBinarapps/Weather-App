@@ -26,7 +26,7 @@ class SearchTabViewController: UIViewController {
         return titleLabel
     }()
 
-    private var cities: [City] = []
+    private var cities: [City]!
     private var dataToDispaly: [City]!
     private var citiesProvider: CitiesProvider
 
@@ -103,11 +103,11 @@ extension SearchTabViewController: UITableViewDataSource {
 
 extension SearchTabViewController: UITableViewDelegate {
     func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let viewController = tabBarController?.viewControllers?[0] as? ViewController else {
+        guard let viewController = tabBarController?.viewControllers?[0] as? WeathersListViewController else {
             return
         }
 
-        viewController.addCity(name: dataToDispaly[indexPath.row].name)
+        viewController.addCity(dataToDispaly[indexPath.row])
         tabBarController?.selectedIndex = 0
     }
 }
