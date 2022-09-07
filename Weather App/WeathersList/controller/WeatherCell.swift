@@ -8,7 +8,7 @@ final class WeatherCell: UITableViewCell {
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         layer.borderWidth = Constants.cellBorderWidth
-        layer.borderColor = CGColor(red: 0, green: 0, blue: 0, alpha: 0)
+        layer.borderColor = UIColor.clear.cgColor
         layer.cornerRadius = Constants.cellCornernRadius
         backgroundColor = .custom(.gray).withAlphaComponent(0.7)
         selectionStyle = .none
