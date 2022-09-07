@@ -33,7 +33,7 @@ class CitiesRepository {
         return await getWeather(url: url, isFromLocation: true)
     }
 
-    public func getWeather(url: URL, isFromLocation _: Bool) async -> CityWeather? {
+    private func getWeather(url: URL, isFromLocation _: Bool) async -> CityWeather? {
         do {
             let (data, _) = try await session.data(from: url)
 

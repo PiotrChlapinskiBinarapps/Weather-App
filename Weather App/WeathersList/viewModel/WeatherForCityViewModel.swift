@@ -28,9 +28,9 @@ class WeatherForCityViewModelImpl: WeatherForCityViewModel {
     private let delegate: WeathersListViewControllerDelegate
     private var cities: Cities
 
-    init(delegate: WeathersListViewControllerDelegate) {
-        storage = StorageUserDefaults()
-        citiesRepository = CitiesRepository()
+    init(delegate: WeathersListViewControllerDelegate, storage: Storage = StorageUserDefaults(), citiesRepository: CitiesRepository = CitiesRepository()) {
+        self.storage = storage
+        self.citiesRepository = citiesRepository
         let list = storage.fetchList()
         cities = Cities(items: list)
         self.delegate = delegate
