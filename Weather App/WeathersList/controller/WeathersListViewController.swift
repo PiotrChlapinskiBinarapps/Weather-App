@@ -1,26 +1,28 @@
 import CoreLocation
 import UIKit
 
+/// Protocol for delegate reload data in TableView
+protocol WeathersListViewControllerDelegate: AnyObject {
+    /// Reload data in TableView
+    func reloadData() async
+}
+
 class WeathersListViewController: UIViewController {
     @IBOutlet var weatherTableView: UITableView!
     private let userLocationViewModel = UserLocationManagerImpl()
-    private let storage = StorageUserDefaults()
-    private var cities: Cities
-    var weatherForCityViewModel: WeatherForCityViewModel = WeatherForCityViewModelImpl()
+    var weatherForCityViewModel: WeatherForCityViewModel!
 
     @available(*, unavailable)
     required init?(coder: NSCoder) {
-        let listOfCities = storage.fetchList()
-        cities = Cities(cities: listOfCities)
         super.init(coder: coder)
+        weatherForCityViewModel = WeatherForCityViewModelImpl(delegate: self)
         userLocationViewModel.configureLocationService()
 
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(coordinateChanged),
                                                name: .coordinateChanged,
                                                object: nil)
-
-        cities.items.forEach { addCityCell($0) }
+        weatherForCityViewModel.setup()
     }
 
     override func viewDidLoad() {
@@ -33,40 +35,14 @@ class WeathersListViewController: UIViewController {
     }
 
     @objc func coordinateChanged(_: Notification) {
-        Task {
-            guard let coordinate = userLocationViewModel.userLocation.currentLocation else {
-                return
-            }
-            let weather = await cities.getWeatherForCoordinate(coordinate: coordinate)
-
-            weatherForCityViewModel.weatherForLocation = weather
-            weatherTableView.reloadData()
+        guard let coordinate = userLocationViewModel.userLocation.currentLocation else {
+            return
         }
-    }
-
-    private func addCityCell(_ city: City) {
-        Task {
-            guard let cityWeather = await cities.getWeatherForCity(city) else {
-                return
-            }
-
-            weatherForCityViewModel.weathers.append(cityWeather)
-            weatherTableView.reloadData()
-        }
+        weatherForCityViewModel.getWeatherForCoordinate(coordinate)
     }
 
     func addCity(_ city: City) {
-        guard cities.isNotContainedCity(cityName: city.plainName) else {
-            return
-        }
-        cities.addCity(city)
-        do {
-            try storage.save(cities: cities.items)
-        } catch {
-            print(error)
-        }
-
-        addCityCell(city)
+        weatherForCityViewModel.getWeatherForCity(city)
     }
 }
 
@@ -124,5 +100,11 @@ extension WeathersListViewController: UITableViewDelegate {
         } else {
             segueController.weather = weatherForCityViewModel.weathers[sender.row]
         }
+    }
+}
+
+extension WeathersListViewController: WeathersListViewControllerDelegate {
+    func reloadData() async {
+        weatherTableView.reloadData()
     }
 }

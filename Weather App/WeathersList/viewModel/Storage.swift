@@ -3,12 +3,12 @@ import Foundation
 /// Protocol  for saving and fetching City objects
 public protocol Storage {
     /// Return list of City objects
-    func fetchList() throws -> [City]
+    func fetchList() -> [City]
 
     /// Save given list of City objects
     /// - Parameters:
     ///   - cities: List of City to saved.
-    func save(cities: [City]) throws
+    func save(cities: [City])
 }
 
 public struct StorageUserDefaults: Storage {
@@ -16,7 +16,7 @@ public struct StorageUserDefaults: Storage {
 
     public init() {}
 
-    public func save(cities: [City]) throws {
+    public func save(cities: [City]) {
         let encoder = JSONEncoder()
         guard let encoded = try? encoder.encode(cities) else {
             return

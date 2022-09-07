@@ -1,8 +1,11 @@
 import Foundation
 import MapKit
 
+/// Protocol for configure and  service user location
 protocol UserLocationManager {
+    /// Variable which contains user location
     var userLocation: UserLocation { get }
+    /// Configure Location service and check nessesery authorization
     func configureLocationService()
 }
 

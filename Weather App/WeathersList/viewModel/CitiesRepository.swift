@@ -2,32 +2,17 @@ import CoreLocation
 import Foundation
 import Keys
 
-public struct City: Codable, Hashable {
-    let name: String
-    let country: String
-    let plainName: String
-
-    public init(from decoder: Decoder) throws {
-        let values = try decoder.container(keyedBy: CodingKeys.self)
-        name = try values.decode(String.self, forKey: .name)
-        country = try values.decode(String.self, forKey: .country)
-        plainName = name.removeDiacratics()
-    }
-}
-
-public struct Cities {
-    var items: [City]
+class CitiesRepository {
     public let session: URLSession
     let requestUrl: String
 
-    init(cities: [City]) {
+    init() {
         session = URLSession(configuration: .default)
         guard let basicURL = Bundle.main.object(forInfoDictionaryKey: "WeatherRequestURL") as? String else {
             fatalError("Incorrect Open Weather URL ")
         }
 
         requestUrl = basicURL
-        items = cities
     }
 
     public func getWeatherForCity(_ city: City) async -> CityWeather? {
@@ -39,7 +24,7 @@ public struct Cities {
         return await getWeather(url: url, isFromLocation: false)
     }
 
-    public func getWeatherForCoordinate(coordinate: CLLocationCoordinate2D) async -> CityWeather? {
+    public func getWeatherForCoordinate(_ coordinate: CLLocationCoordinate2D) async -> CityWeather? {
         guard let url = URL(string: requestUrl + "?lat=\(coordinate.latitude)" +
             "&lon=\(coordinate.longitude)&appid=\(Weather_AppKeys().openWeatherApiKey)&units=metric")
         else {
@@ -59,16 +44,5 @@ public struct Cities {
             print(error)
             return nil
         }
-    }
-
-    public mutating func addCity(_ city: City) {
-        items.append(city)
-    }
-
-    public func isNotContainedCity(cityName: String) -> Bool {
-        let isContained = items.contains {
-            $0.plainName == cityName
-        }
-        return !isContained
     }
 }
