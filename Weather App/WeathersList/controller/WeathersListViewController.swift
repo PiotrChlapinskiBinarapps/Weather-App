@@ -5,6 +5,8 @@ import UIKit
 protocol WeathersListViewControllerDelegate: AnyObject {
     /// Reload data in TableView
     func reloadData() async
+    /// Initiates the segue with the specified identifier.
+    func prepareSegue(withIdentifier: String, indexPath: IndexPath) async
 }
 
 class WeathersListViewController: UIViewController {
@@ -73,7 +75,7 @@ extension WeathersListViewController: UITableViewDataSource {
                 return UITableViewCell()
             }
             name = weather.name
-            degree = "\(Int(weather.mesurements.temperature))"
+            degree = "\(weather.mesurements.temperature.int)"
         } else {
             name = cityWeatherViewModel.weathers[indexPath.row].name
             degree = "\(cityWeatherViewModel.weathers[indexPath.row].mesurements.temperature)"
@@ -99,7 +101,8 @@ extension WeathersListViewController: UITableViewDataSource {
 
 extension WeathersListViewController: UITableViewDelegate {
     func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
-        performSegue(withIdentifier: "WeatherDetails", sender: indexPath)
+        weatherTableView.allowsSelection = false
+        cityWeatherViewModel.getForecastForCity(indexPath)
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -117,5 +120,10 @@ extension WeathersListViewController: UITableViewDelegate {
 extension WeathersListViewController: WeathersListViewControllerDelegate {
     func reloadData() async {
         weatherTableView.reloadData()
+    }
+
+    func prepareSegue(withIdentifier: String, indexPath: IndexPath) async {
+        performSegue(withIdentifier: withIdentifier, sender: indexPath)
+        weatherTableView.allowsSelection = true
     }
 }
