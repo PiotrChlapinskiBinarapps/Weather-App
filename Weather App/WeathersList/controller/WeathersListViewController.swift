@@ -10,19 +10,19 @@ protocol WeathersListViewControllerDelegate: AnyObject {
 class WeathersListViewController: UIViewController {
     @IBOutlet var weatherTableView: UITableView!
     private let userLocationViewModel = UserLocationManagerImpl()
-    var weatherForCityViewModel: WeatherForCityViewModel!
+    var cityWeatherViewModel: CityWeatherViewModel!
 
     @available(*, unavailable)
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        weatherForCityViewModel = WeatherForCityViewModelImpl(delegate: self)
+        cityWeatherViewModel = CityWeatherViewModelImpl(delegate: self)
         userLocationViewModel.configureLocationService()
 
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(coordinateChanged),
                                                name: .coordinateChanged,
                                                object: nil)
-        weatherForCityViewModel.setup()
+        cityWeatherViewModel.setup()
     }
 
     override func viewDidLoad() {
@@ -38,11 +38,11 @@ class WeathersListViewController: UIViewController {
         guard let coordinate = userLocationViewModel.userLocation.currentLocation else {
             return
         }
-        weatherForCityViewModel.getWeatherForCoordinate(coordinate)
+        cityWeatherViewModel.getWeatherForCoordinate(coordinate)
     }
 
     func addCity(_ city: City) {
-        weatherForCityViewModel.getWeatherForCity(city)
+        cityWeatherViewModel.getWeatherForCity(city)
     }
 }
 
@@ -53,10 +53,10 @@ extension WeathersListViewController: UITableViewDataSource {
 
     public func tableView(_: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
-            return weatherForCityViewModel.weatherForLocation == nil ? 0 : 1
+            return cityWeatherViewModel.weatherForLocation == nil ? 0 : 1
         }
 
-        return weatherForCityViewModel.weathers.count
+        return cityWeatherViewModel.weathers.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -69,20 +69,31 @@ extension WeathersListViewController: UITableViewDataSource {
         let degree: String
 
         if indexPath.section == 0 {
-            guard let weather = weatherForCityViewModel.weatherForLocation else {
+            guard let weather = cityWeatherViewModel.weatherForLocation else {
                 return UITableViewCell()
             }
             name = weather.name
             degree = "\(weather.mesurements.temperature)"
         } else {
-            name = weatherForCityViewModel.weathers[indexPath.row].name
-            degree = "\(weatherForCityViewModel.weathers[indexPath.row].mesurements.temperature)"
+            name = cityWeatherViewModel.weathers[indexPath.row].name
+            degree = "\(cityWeatherViewModel.weathers[indexPath.row].mesurements.temperature)"
         }
 
         cell.cityLabel.text = name
         cell.degreeLabel.text = "\(degree) °C"
 
         return cell
+    }
+
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if cityWeatherViewModel.weatherForLocation != nil, indexPath == IndexPath(row: 0, section: 0) {
+            return
+        }
+
+        if editingStyle == .delete {
+            cityWeatherViewModel.removeWeather(index: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .fade)
+        }
     }
 }
 
@@ -95,10 +106,10 @@ extension WeathersListViewController: UITableViewDelegate {
         guard let segueController = segue.destination as? WeatherDetailsViewController, let sender = sender as? IndexPath else {
             return
         }
-        if sender == IndexPath(row: 0, section: 0), weatherForCityViewModel.weatherForLocation != nil {
-            segueController.weather = weatherForCityViewModel.weatherForLocation
+        if sender == IndexPath(row: 0, section: 0), cityWeatherViewModel.weatherForLocation != nil {
+            segueController.weather = cityWeatherViewModel.weatherForLocation
         } else {
-            segueController.weather = weatherForCityViewModel.weathers[sender.row]
+            segueController.weather = cityWeatherViewModel.weathers[sender.row]
         }
     }
 }
