@@ -3,7 +3,7 @@ import Foundation
 import Keys
 
 /// Protocol for objects that can provide weathers
-public protocol WeatherForCityViewModel {
+public protocol CityWeatherViewModel {
     /// Variable which contains list of wather for city selected by user
     var weathers: [CityWeather] { get set }
     /// Variable which contains weather for place where user is now
@@ -21,7 +21,7 @@ public protocol WeatherForCityViewModel {
     func removeWeather(index: Int)
 }
 
-class WeatherForCityViewModelImpl: WeatherForCityViewModel {
+class CityWeatherViewModelImpl: CityWeatherViewModel {
     public var weathers: [CityWeather] = []
     public var weatherForLocation: CityWeather?
     private let citiesRepository: CitiesRepository
