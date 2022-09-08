@@ -15,7 +15,7 @@ class WeatherDetailsViewController: UIViewController {
             return
         }
         cityNameLabel.text = weather.name
-        temperatureLabel.text = "\(weather.mesurements.temperature) °C"
+        temperatureLabel.text = "\(Int(weather.mesurements.temperature)) °C"
         pressureLabel.text = "\(weather.mesurements.pressure) hPa"
         humidityLabel.text = "\(weather.mesurements.humidity) %"
         weatherDescriptionLabel.text = "\(weather.description[0].descriptionWeather)"

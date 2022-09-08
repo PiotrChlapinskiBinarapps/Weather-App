@@ -63,7 +63,7 @@ class AppViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let backgroundImage = UIImage(named: "background")
+        let backgroundImage = UIImage(named: "app_background")
         let backgroundImageView = UIImageView(image: backgroundImage)
 
         view.addSubview(backgroundImageView)
