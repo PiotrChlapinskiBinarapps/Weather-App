@@ -99,10 +99,6 @@ extension SearchTabViewController: UITableViewDataSource {
     func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
         return dataToDispaly.count
     }
-
-    func scrollViewWillBeginDragging(_: UIScrollView) {
-        searchBar.endEditing(true)
-    }
 }
 
 extension SearchTabViewController: UITableViewDelegate {
