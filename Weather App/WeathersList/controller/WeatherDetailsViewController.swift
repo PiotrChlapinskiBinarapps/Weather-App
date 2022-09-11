@@ -29,11 +29,17 @@ class WeatherDetailsViewController: UIViewController {
 
     private func configureView() {
         cityNameLabel.text = weather.name
-        temperatureLabel.text = "\(Int(weather.mesurements.temperature)) °C"
-        humadityLabel.text = "\(weather.mesurements.humidity)%"
-        pressureLabel.text = "\(weather.mesurements.pressure)hPa"
-        windSpeedLabel.text = "\(weather.wind.velocity)km/h"
-        cloudinessLabel.text = "\(weather.clouds.cloudiness)%"
+        let temperature = Measurement(value: weather.mesurements.temperature, unit: UnitTemperature.celsius)
+        let pressure = Measurement(value: weather.mesurements.pressure, unit: UnitPressure.hectopascals)
+        let velocity = Measurement(value: weather.wind.velocity, unit: UnitSpeed.kilometersPerHour)
+        let humidity = Measurement(value: weather.mesurements.humidity, unit: Unit.percent)
+        let cloudiness = Measurement(value: weather.clouds.cloudiness, unit: Unit.percent)
+
+        temperatureLabel.text = temperature.withoutDigits
+        windSpeedLabel.text = velocity.withoutDigits
+        pressureLabel.text = pressure.withoutDigits
+        humadityLabel.text = humidity.withoutDigits
+        cloudinessLabel.text = cloudiness.withoutDigits
 
         sunriseLabel.text = "\(weather.sun.sunrise.hoursAndMinutes)"
         sunsetLabel.text = "\(weather.sun.sunset.hoursAndMinutes)"

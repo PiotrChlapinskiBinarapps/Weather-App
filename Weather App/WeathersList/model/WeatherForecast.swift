@@ -22,7 +22,7 @@ public struct WeatherForecast: Decodable {
 }
 
 public struct OneForecast: Decodable {
-    let mesurements: Mesurements
+    let mesurements: Measurements
     let description: [Description]
     let wind: Wind
     let clouds: Clouds

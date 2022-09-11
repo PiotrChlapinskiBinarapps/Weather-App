@@ -11,7 +11,7 @@ class HourForecastWeatherCell: UICollectionViewCell {
 
     private var temperatureLabel: UILabel = {
         let label = UILabel()
-        label.text = "12 C"
+        label.text = "12 °C"
         label.textColor = .custom(.white)
         label.font.withSize(10)
         return label
@@ -53,7 +53,8 @@ class HourForecastWeatherCell: UICollectionViewCell {
 
     public func setup(weatherForecast: OneForecast) {
         timeLabel.text = "\(weatherForecast.date.hoursAndMinutes)"
-        temperatureLabel.text = "\(weatherForecast.mesurements.temperature.int)°C"
+        let temperature = Measurement(value: weatherForecast.mesurements.temperature, unit: UnitTemperature.celsius)
+        temperatureLabel.text = temperature.withoutDigits
 
         let image = UIImage(named: "\(weatherForecast.description[0].iconId)")
         weatherSymbolImageView.image = image

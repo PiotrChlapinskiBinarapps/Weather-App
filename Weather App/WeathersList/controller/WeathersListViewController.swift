@@ -68,21 +68,22 @@ extension WeathersListViewController: UITableViewDataSource {
             return tableView.dequeueReusableCell(withIdentifier: "WeatherCell", for: indexPath)
         }
         let name: String
-        let degree: String
+        let degree: Double
 
         if indexPath.section == 0 {
             guard let weather = cityWeatherViewModel.weatherForLocation else {
                 return UITableViewCell()
             }
             name = weather.name
-            degree = "\(weather.mesurements.temperature.int)"
+            degree = weather.mesurements.temperature
         } else {
             name = cityWeatherViewModel.weathers[indexPath.row].name
-            degree = "\(cityWeatherViewModel.weathers[indexPath.row].mesurements.temperature)"
+            degree = cityWeatherViewModel.weathers[indexPath.row].mesurements.temperature
         }
 
         cell.cityLabel.text = name
-        cell.degreeLabel.text = "\(degree) °C"
+        let temperature = Measurement(value: degree, unit: UnitTemperature.celsius)
+        cell.degreeLabel.text = temperature.withoutDigits
 
         return cell
     }

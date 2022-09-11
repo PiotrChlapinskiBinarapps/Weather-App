@@ -28,26 +28,23 @@ public protocol CityWeatherViewModel {
 class CityWeatherViewModelImpl: CityWeatherViewModel {
     public var weathers: [CityWeather] = []
     public var weatherForLocation: CityWeather?
-    private let citiesRepository: CitiesRepository
-    private let forecastRepository: ForecastRepositoryImpl
-
+    private let weatherRepository: WeatherRepository
     private let storage: Storage
     private let delegate: WeathersListViewControllerDelegate
     private var cities: Cities
 
-    init(delegate: WeathersListViewControllerDelegate, storage: Storage = StorageUserDefaults(), citiesRepository: CitiesRepository = CitiesRepository(), forecastRepository: ForecastRepositoryImpl = ForecastRepositoryImpl()) {
+    init(delegate: WeathersListViewControllerDelegate, storage: Storage = StorageUserDefaults(), weatherRepository: WeatherRepository = WeatherRepositoryImpl()) {
         self.storage = storage
-        self.citiesRepository = citiesRepository
+        self.weatherRepository = weatherRepository
         let list = storage.fetchList()
         cities = Cities(items: list)
         self.delegate = delegate
-        self.forecastRepository = forecastRepository
     }
 
     func setup() {
         for city in cities.items {
             Task {
-                if let weather = await citiesRepository.getWeatherForCity(city) {
+                if let weather = await weatherRepository.getWeatherForCity(city) {
                     weathers.append(weather)
                     await delegate.reloadData()
                 }
@@ -57,7 +54,7 @@ class CityWeatherViewModelImpl: CityWeatherViewModel {
 
     public func getWeatherForCity(_ city: City) {
         Task {
-            guard let weather = await citiesRepository.getWeatherForCity(city) else {
+            guard let weather = await weatherRepository.getWeatherForCity(city) else {
                 return
             }
 
@@ -73,7 +70,9 @@ class CityWeatherViewModelImpl: CityWeatherViewModel {
 
     public func getWeatherForCoordinate(_ coordinate: CLLocationCoordinate2D) {
         Task {
-            let weather = await citiesRepository.getWeatherForCoordinate(coordinate)
+            guard let weather = await weatherRepository.getWeatherForCoordinate(coordinate), !weather.name.isEmpty else {
+                return
+            }
 
             weatherForLocation = weather
             await delegate.reloadData()
@@ -90,11 +89,11 @@ class CityWeatherViewModelImpl: CityWeatherViewModel {
         Task {
             let weatherForecast: WeatherForecast?
             if indexPath == IndexPath(row: 0, section: 0), weatherForLocation?.weatherForecast == nil {
-                weatherForecast = await forecastRepository.getWeatherForecastForCity(weatherForLocation?.name ?? "")
+                weatherForecast = await weatherRepository.getWeatherForecastForCity(weatherForLocation?.name ?? "")
                 weatherForLocation?.weatherForecast = weatherForecast
             } else if weathers[indexPath.row].weatherForecast == nil {
                 let cityName = weathers[indexPath.row].name
-                weatherForecast = await forecastRepository.getWeatherForecastForCity(cityName)
+                weatherForecast = await weatherRepository.getWeatherForecastForCity(cityName)
                 weathers[indexPath.row].weatherForecast = weatherForecast
             }
             await delegate.prepareSegue(withIdentifier: "WeatherDetails", indexPath: indexPath)

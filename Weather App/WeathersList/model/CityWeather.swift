@@ -2,7 +2,7 @@ import Foundation
 
 // A struct for to hold information about weather
 public struct CityWeather: Decodable {
-    let mesurements: Mesurements
+    let mesurements: Measurements
     let description: [Description]
     let name: String
     let sun: Sun
@@ -20,7 +20,7 @@ public struct CityWeather: Decodable {
     }
 }
 
-public struct Mesurements: Decodable {
+public struct Measurements: Decodable {
     let temperature: Double
     let pressure: Double
     let humidity: Double
