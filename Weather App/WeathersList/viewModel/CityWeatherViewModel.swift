@@ -42,8 +42,8 @@ class CityWeatherViewModelImpl: CityWeatherViewModel {
     }
 
     func setup() {
-        for city in cities.items {
-            Task {
+        Task {
+            for city in cities.items {
                 if let weather = await weatherRepository.getWeatherForCity(city) {
                     weathers.append(weather)
                     await delegate.reloadData()
