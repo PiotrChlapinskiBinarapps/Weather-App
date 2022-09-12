@@ -1,7 +1,7 @@
 import SnapKit
 import UIKit
 
-class SearchTabViewController: UIViewController {
+class SearchTabViewController: UIViewController, AlertPresenting {
     private var searchBar: UISearchBar = {
         let searchBar = UISearchBar()
         searchBar.layer.cornerRadius = 15.0
@@ -26,23 +26,51 @@ class SearchTabViewController: UIViewController {
         return titleLabel
     }()
 
-    private var cities: [City]!
-    private var dataToDispaly: [City]!
-    private var citiesProvider: CitiesProvider
+    private var indicator: UIActivityIndicatorView = {
+        let indicator = UIActivityIndicatorView()
+        indicator.style = .large
+        indicator.color = .white
+        return indicator
+    }()
+
+    private var cities: [City] = []
+    private var dataToDispaly: [City] = []
+    private var citiesProvider = CitiesProvider()
 
     required init?(coder: NSCoder) {
-        citiesProvider = CitiesProvider()
-        cities = citiesProvider.fetchCities()
         super.init(coder: coder)
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .custom(.black)
-
-        dataToDispaly = cities
-
         configureView()
+        configureIndicator()
+
+        fetchCities()
+    }
+
+    func configureIndicator() {
+        view.addSubview(indicator)
+
+        indicator.snp.makeConstraints { make in
+            make.centerX.centerY.equalToSuperview()
+        }
+    }
+
+    func fetchCities() {
+        indicator.startAnimating()
+        Task {
+            do {
+                cities = try await citiesProvider.fetchCities()
+            } catch {
+                let action = UIAlertAction(title: "Ok", style: .default)
+                presentAlert(title: "Search Tab: Error Catched", message: "Message: \(error)", actions: [action])
+            }
+            indicator.stopAnimating()
+            dataToDispaly = cities
+            tableView.reloadData()
+        }
     }
 }
 

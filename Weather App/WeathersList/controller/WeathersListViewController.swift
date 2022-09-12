@@ -2,17 +2,22 @@ import CoreLocation
 import UIKit
 
 /// Protocol for delegate reload data in TableView
-protocol WeathersListViewControllerDelegate: AnyObject {
+public protocol WeathersListViewControllerDelegate: AnyObject {
     /// Reload data in TableView
     func reloadData() async
     /// Initiates the segue with the specified identifier.
     func prepareSegue(withIdentifier: String, indexPath: IndexPath) async
+    /// Present alert with received error
+    /// - Parameters:
+    ///   - error: Error for which presented in message
+    func presentErrorDecoderWeather(_ error: Error) async
 }
 
-class WeathersListViewController: UIViewController {
+class WeathersListViewController: UIViewController, AlertPresenting {
     @IBOutlet var weatherTableView: UITableView!
-    private let userLocationViewModel = UserLocationManagerImpl()
+    @IBOutlet var reloadButton: UIButton!
     var cityWeatherViewModel: CityWeatherViewModel!
+    private let userLocationViewModel = UserLocationManagerImpl()
 
     @available(*, unavailable)
     required init?(coder: NSCoder) {
@@ -36,24 +41,33 @@ class WeathersListViewController: UIViewController {
         weatherTableView.backgroundColor = .clear
     }
 
+    func addCity(_ city: City) {
+        cityWeatherViewModel.getWeatherForCity(city)
+    }
+
+    @IBAction func reloadWeathers(_: Any) {
+        cityWeatherViewModel.setup()
+        reloadCoordinateWeather()
+    }
+
     @objc func coordinateChanged(_: Notification) {
+        reloadCoordinateWeather()
+    }
+
+    private func reloadCoordinateWeather() {
         guard let coordinate = userLocationViewModel.userLocation.currentLocation else {
             return
         }
         cityWeatherViewModel.getWeatherForCoordinate(coordinate)
     }
-
-    func addCity(_ city: City) {
-        cityWeatherViewModel.getWeatherForCity(city)
-    }
 }
 
 extension WeathersListViewController: UITableViewDataSource {
-    public func numberOfSections(in _: UITableView) -> Int {
+    func numberOfSections(in _: UITableView) -> Int {
         return 2
     }
 
-    public func tableView(_: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
             return cityWeatherViewModel.weatherForLocation == nil ? 0 : 1
         }
@@ -119,12 +133,18 @@ extension WeathersListViewController: UITableViewDelegate {
 }
 
 extension WeathersListViewController: WeathersListViewControllerDelegate {
-    func reloadData() async {
+    public func reloadData() async {
         weatherTableView.reloadData()
     }
 
-    func prepareSegue(withIdentifier: String, indexPath: IndexPath) async {
+    public func prepareSegue(withIdentifier: String, indexPath: IndexPath) async {
         performSegue(withIdentifier: withIdentifier, sender: indexPath)
         weatherTableView.allowsSelection = true
+    }
+
+    public func presentErrorDecoderWeather(_ error: Error) async {
+        let action = UIAlertAction(title: "Ok", style: .default)
+
+        presentAlert(title: "Weather App: Error Catched", message: "Message: \(error)", actions: [action])
     }
 }

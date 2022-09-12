@@ -15,6 +15,7 @@ class WeatherDetailsViewController: UIViewController {
     @IBOutlet var forecastHoursCollection: UICollectionView!
     @IBOutlet var daysForecastsCollection: UICollectionView!
     @IBOutlet var backgroundImageView: UIImageView!
+    @IBOutlet var basicMeasurementStackView: UIStackView!
     private lazy var hoursForecastDataSource = HoursForecastDataSource(weather: weather)
     private lazy var daysForecastDataSource = DaysForecastDataSource(weather: weather)
 
@@ -52,6 +53,9 @@ class WeatherDetailsViewController: UIViewController {
         backgroundImageView.image = background
 
         configureCollections()
+
+        basicMeasurementStackView.backgroundColor = .custom(.gray).withAlphaComponent(0.5)
+        basicMeasurementStackView.layer.cornerRadius = 30
     }
 
     private func configureCollections() {
