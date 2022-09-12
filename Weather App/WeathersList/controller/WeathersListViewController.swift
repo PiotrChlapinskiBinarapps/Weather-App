@@ -10,10 +10,10 @@ public protocol WeathersListViewControllerDelegate: AnyObject {
     /// Present alert with received error
     /// - Parameters:
     ///   - error: Error for which presented in message
-    func presentAlert(_ error: Error) async
+    func presentErrorDecoderWeather(_ error: Error) async
 }
 
-class WeathersListViewController: UIViewController {
+class WeathersListViewController: UIViewController, AlertPresenting {
     @IBOutlet var weatherTableView: UITableView!
     @IBOutlet var reloadButton: UIButton!
     var cityWeatherViewModel: CityWeatherViewModel!
@@ -142,12 +142,9 @@ extension WeathersListViewController: WeathersListViewControllerDelegate {
         weatherTableView.allowsSelection = true
     }
 
-    public func presentAlert(_ error: Error) async {
+    public func presentErrorDecoderWeather(_ error: Error) async {
         let action = UIAlertAction(title: "Ok", style: .default)
-        let alert = UIAlertController(title: "Weather App: Error Catched", message: "Message: \(error)", preferredStyle: .alert)
 
-        alert.addAction(action)
-
-        present(alert, animated: true, completion: nil)
+        presentAlert(title: "Weather App: Error Catched", message: "Message: \(error)", actions: [action])
     }
 }

@@ -1,7 +1,7 @@
 import SnapKit
 import UIKit
 
-class SearchTabViewController: UIViewController {
+class SearchTabViewController: UIViewController, AlertPresenting {
     private var searchBar: UISearchBar = {
         let searchBar = UISearchBar()
         searchBar.layer.cornerRadius = 15.0
@@ -62,21 +62,13 @@ class SearchTabViewController: UIViewController {
             do {
                 cities = try await citiesProvider.fetchCities()
             } catch {
-                presentAlert(error)
+                let action = UIAlertAction(title: "Ok", style: .default)
+                presentAlert(title: "Search Tab: Error Catched", message: "Message: \(error)", actions: [action])
             }
             indicator.stopAnimating()
             dataToDispaly = cities
             tableView.reloadData()
         }
-    }
-
-    public func presentAlert(_ error: Error) {
-        let action = UIAlertAction(title: "Ok", style: .default)
-        let alert = UIAlertController(title: "SearchTab: Error Catched", message: "Message: \(error)", preferredStyle: .alert)
-
-        alert.addAction(action)
-
-        present(alert, animated: false, completion: nil)
     }
 }
 

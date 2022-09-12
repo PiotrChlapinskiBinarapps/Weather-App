@@ -76,5 +76,3 @@ class WeatherRepositoryImpl: WeatherRepository {
         return try decoder.decode(WeatherForecast.self, from: data)
     }
 }
-
-struct ApiError: Error {}

@@ -31,7 +31,7 @@ class HourForecastWeatherCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureView()
-        backgroundColor = .custom(.gray).withAlphaComponent(0.9)
+        backgroundColor = .custom(.gray).withAlphaComponent(0.5)
         layer.cornerRadius = 15
     }
 

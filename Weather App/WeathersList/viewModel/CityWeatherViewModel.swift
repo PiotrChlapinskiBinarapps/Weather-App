@@ -54,7 +54,7 @@ class CityWeatherViewModelImpl: CityWeatherViewModel {
                         await delegate.reloadData()
                     }
                 } catch {
-                    await delegate.presentAlert(error)
+                    await delegate.presentErrorDecoderWeather(error)
                 }
             }
         }
@@ -75,7 +75,7 @@ class CityWeatherViewModelImpl: CityWeatherViewModel {
                     await delegate.reloadData()
                 }
             } catch {
-                await delegate.presentAlert(error)
+                await delegate.presentErrorDecoderWeather(error)
             }
         }
     }
@@ -90,7 +90,7 @@ class CityWeatherViewModelImpl: CityWeatherViewModel {
                 weatherForLocation = weather
                 await delegate.reloadData()
             } catch {
-                await delegate.presentAlert(error)
+                await delegate.presentErrorDecoderWeather(error)
             }
         }
     }
@@ -115,7 +115,7 @@ class CityWeatherViewModelImpl: CityWeatherViewModel {
                 }
                 await delegate.prepareSegue(withIdentifier: "WeatherDetails", indexPath: indexPath)
             } catch {
-                await delegate.presentAlert(error)
+                await delegate.presentErrorDecoderWeather(error)
             }
         }
     }
