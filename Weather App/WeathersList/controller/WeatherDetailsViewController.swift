@@ -14,6 +14,7 @@ class WeatherDetailsViewController: UIViewController {
     @IBOutlet var weatherImageView: UIImageView!
     @IBOutlet var forecastHoursCollection: UICollectionView!
     @IBOutlet var daysForecastsCollection: UICollectionView!
+    @IBOutlet var backgroundImageView: UIImageView!
     private lazy var hoursForecastDataSource = HoursForecastDataSource(weather: weather)
     private lazy var daysForecastDataSource = DaysForecastDataSource(weather: weather)
 
@@ -46,6 +47,9 @@ class WeatherDetailsViewController: UIViewController {
 
         let image = UIImage(named: "\(weather.description[0].iconId)")
         weatherImageView.image = image
+
+        let background = UIImage(named: "\(weather.description[0].iconId)b")
+        backgroundImageView.image = background
 
         configureCollections()
     }
