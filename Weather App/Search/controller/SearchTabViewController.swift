@@ -26,23 +26,57 @@ class SearchTabViewController: UIViewController {
         return titleLabel
     }()
 
-    private var cities: [City]!
-    private var dataToDispaly: [City]!
-    private var citiesProvider: CitiesProvider
+    private var indicator: UIActivityIndicatorView = {
+        let indicator = UIActivityIndicatorView()
+        indicator.style = .large
+        indicator.color = .white
+
+        return indicator
+    }()
+
+    private var cities: [City] = []
+    private var dataToDispaly: [City] = []
+    private var citiesProvider = CitiesProvider()
 
     required init?(coder: NSCoder) {
-        citiesProvider = CitiesProvider()
-        cities = citiesProvider.fetchCities()
         super.init(coder: coder)
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .custom(.black)
-
-        dataToDispaly = cities
-
         configureView()
+
+        view.addSubview(indicator)
+
+        indicator.snp.makeConstraints { make in
+            make.centerX.centerY.equalToSuperview()
+        }
+
+        fetchCities()
+    }
+
+    func fetchCities() {
+        indicator.startAnimating()
+        Task {
+            do {
+                cities = try await citiesProvider.fetchCities()
+            } catch {
+                presentAlert(error)
+            }
+            indicator.stopAnimating()
+            dataToDispaly = cities
+            tableView.reloadData()
+        }
+    }
+
+    public func presentAlert(_ error: Error) {
+        let action = UIAlertAction(title: "Ok", style: .default)
+        let alert = UIAlertController(title: "SearchTab: Error Catched", message: "Message: \(error)", preferredStyle: .alert)
+
+        alert.addAction(action)
+
+        present(alert, animated: false, completion: nil)
     }
 }
 

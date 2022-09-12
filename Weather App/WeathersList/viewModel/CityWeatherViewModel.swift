@@ -18,6 +18,9 @@ public protocol CityWeatherViewModel {
     func getWeatherForCoordinate(_ coordinate: CLLocationCoordinate2D)
     /// Get weather for cities from storage.
     func setup()
+    /// Remove weather for selected index
+    /// - Parameters:
+    ///   - indexPath: IndexPath for which the weather  will be removed
     func removeWeather(index: Int)
     /// Give weather forecast for selected index
     /// - Parameters:
@@ -45,9 +48,13 @@ class CityWeatherViewModelImpl: CityWeatherViewModel {
         weathers.removeAll()
         Task {
             for city in cities.items {
-                if let weather = await weatherRepository.getWeatherForCity(city) {
-                    weathers.append(weather)
-                    await delegate.reloadData()
+                do {
+                    if let weather = try await weatherRepository.getWeatherForCity(city) {
+                        weathers.append(weather)
+                        await delegate.reloadData()
+                    }
+                } catch {
+                    await delegate.presentAlert(error)
                 }
             }
         }
@@ -55,28 +62,36 @@ class CityWeatherViewModelImpl: CityWeatherViewModel {
 
     public func getWeatherForCity(_ city: City) {
         Task {
-            guard let weather = await weatherRepository.getWeatherForCity(city) else {
-                return
-            }
+            do {
+                guard let weather = try await weatherRepository.getWeatherForCity(city) else {
+                    return
+                }
 
-            if cities.isNotContainedCity(cityName: city.plainName) {
-                weathers.append(weather)
-                cities.items.append(city)
+                if cities.isNotContainedCity(cityName: city.plainName) {
+                    weathers.append(weather)
+                    cities.items.append(city)
 
-                storage.save(cities: cities.items)
-                await delegate.reloadData()
+                    storage.save(cities: cities.items)
+                    await delegate.reloadData()
+                }
+            } catch {
+                await delegate.presentAlert(error)
             }
         }
     }
 
     public func getWeatherForCoordinate(_ coordinate: CLLocationCoordinate2D) {
         Task {
-            guard let weather = await weatherRepository.getWeatherForCoordinate(coordinate), !weather.name.isEmpty else {
-                return
-            }
+            do {
+                guard let weather = try await weatherRepository.getWeatherForCoordinate(coordinate), !weather.name.isEmpty else {
+                    return
+                }
 
-            weatherForLocation = weather
-            await delegate.reloadData()
+                weatherForLocation = weather
+                await delegate.reloadData()
+            } catch {
+                await delegate.presentAlert(error)
+            }
         }
     }
 
@@ -88,16 +103,20 @@ class CityWeatherViewModelImpl: CityWeatherViewModel {
 
     public func getForecastForCity(_ indexPath: IndexPath) {
         Task {
-            let weatherForecast: WeatherForecast?
-            if indexPath == IndexPath(row: 0, section: 0), weatherForLocation?.weatherForecast == nil {
-                weatherForecast = await weatherRepository.getWeatherForecastForCity(weatherForLocation?.name ?? "")
-                weatherForLocation?.weatherForecast = weatherForecast
-            } else if weathers[indexPath.row].weatherForecast == nil {
-                let cityName = weathers[indexPath.row].name
-                weatherForecast = await weatherRepository.getWeatherForecastForCity(cityName)
-                weathers[indexPath.row].weatherForecast = weatherForecast
+            do {
+                let weatherForecast: WeatherForecast?
+                if indexPath == IndexPath(row: 0, section: 0), weatherForLocation?.weatherForecast == nil {
+                    weatherForecast = try await weatherRepository.getWeatherForecastForCity(weatherForLocation?.name ?? "")
+                    weatherForLocation?.weatherForecast = weatherForecast
+                } else if weathers[indexPath.row].weatherForecast == nil {
+                    let cityName = weathers[indexPath.row].name
+                    weatherForecast = try await weatherRepository.getWeatherForecastForCity(cityName)
+                    weathers[indexPath.row].weatherForecast = weatherForecast
+                }
+                await delegate.prepareSegue(withIdentifier: "WeatherDetails", indexPath: indexPath)
+            } catch {
+                await delegate.presentAlert(error)
             }
-            await delegate.prepareSegue(withIdentifier: "WeatherDetails", indexPath: indexPath)
         }
     }
 }

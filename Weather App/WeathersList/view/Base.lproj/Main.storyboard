@@ -372,7 +372,7 @@
         <!--Tab Bar Controller-->
         <scene sceneID="fyD-P5-f6Z">
             <objects>
-                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="QxA-t5-knc" sceneMemberID="viewController">
+                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="QxA-t5-knc" customClass="TabBarController" customModule="Weather_App" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="yEf-Jz-gBE">
                         <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
