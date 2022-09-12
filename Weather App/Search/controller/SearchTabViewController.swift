@@ -30,7 +30,6 @@ class SearchTabViewController: UIViewController, AlertPresenting {
         let indicator = UIActivityIndicatorView()
         indicator.style = .large
         indicator.color = .white
-
         return indicator
     }()
 
@@ -46,14 +45,17 @@ class SearchTabViewController: UIViewController, AlertPresenting {
         super.viewDidLoad()
         view.backgroundColor = .custom(.black)
         configureView()
+        configureIndicator()
 
+        fetchCities()
+    }
+
+    func configureIndicator() {
         view.addSubview(indicator)
 
         indicator.snp.makeConstraints { make in
             make.centerX.centerY.equalToSuperview()
         }
-
-        fetchCities()
     }
 
     func fetchCities() {
