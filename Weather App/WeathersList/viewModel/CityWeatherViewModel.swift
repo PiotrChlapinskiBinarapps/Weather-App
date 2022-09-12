@@ -42,6 +42,7 @@ class CityWeatherViewModelImpl: CityWeatherViewModel {
     }
 
     func setup() {
+        weathers.removeAll()
         Task {
             for city in cities.items {
                 if let weather = await weatherRepository.getWeatherForCity(city) {

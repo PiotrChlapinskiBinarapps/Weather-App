@@ -11,6 +11,7 @@ protocol WeathersListViewControllerDelegate: AnyObject {
 
 class WeathersListViewController: UIViewController {
     @IBOutlet var weatherTableView: UITableView!
+    @IBOutlet var reloadButton: UIButton!
     private let userLocationViewModel = UserLocationManagerImpl()
     var cityWeatherViewModel: CityWeatherViewModel!
 
@@ -37,6 +38,10 @@ class WeathersListViewController: UIViewController {
     }
 
     @objc func coordinateChanged(_: Notification) {
+        reloadCoordinateWeather()
+    }
+
+    private func reloadCoordinateWeather() {
         guard let coordinate = userLocationViewModel.userLocation.currentLocation else {
             return
         }
@@ -45,6 +50,11 @@ class WeathersListViewController: UIViewController {
 
     func addCity(_ city: City) {
         cityWeatherViewModel.getWeatherForCity(city)
+    }
+
+    @IBAction func reloadWeathers(_: Any) {
+        cityWeatherViewModel.setup()
+        reloadCoordinateWeather()
     }
 }
 

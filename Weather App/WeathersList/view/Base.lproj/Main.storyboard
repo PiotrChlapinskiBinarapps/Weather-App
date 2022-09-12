@@ -19,34 +19,52 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" image="main_background" translatesAutoresizingMaskIntoConstraints="NO" id="qEg-Rs-2fY">
-                                <rect key="frame" x="0.0" y="80" width="414" height="733"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="813"/>
                             </imageView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="singleLineEtched" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="wVW-1N-Vr3">
                                 <rect key="frame" x="0.0" y="100" width="414" height="713"/>
                                 <color key="backgroundColor" red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <sections/>
                             </tableView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Weather" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Paz-Ku-ral">
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="xxP-x7-sDA">
                                 <rect key="frame" x="20" y="44" width="374" height="36"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="30"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Weather" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Paz-Ku-ral">
+                                        <rect key="frame" x="0.0" y="0.0" width="274" height="36"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="30"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Rx-Dh-kF2">
+                                        <rect key="frame" x="274" y="0.0" width="100" height="36"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="100" id="6RY-Rz-RRr"/>
+                                        </constraints>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" imagePlacement="trailing">
+                                            <imageReference key="image" image="arrow.clockwise" catalog="system" symbolScale="large"/>
+                                        </buttonConfiguration>
+                                        <connections>
+                                            <action selector="reloadWeathers:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Vy2-Vz-sV3"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="qEg-Rs-2fY" firstAttribute="top" secondItem="Paz-Ku-ral" secondAttribute="bottom" id="7Pu-N6-uNf"/>
+                            <constraint firstItem="xxP-x7-sDA" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="Fex-qB-hBG"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="qEg-Rs-2fY" secondAttribute="trailing" id="HB5-Ir-eF1"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="wVW-1N-Vr3" secondAttribute="trailing" id="LJA-Lk-q1V"/>
+                            <constraint firstItem="xxP-x7-sDA" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="topMargin" id="OQH-qE-o1g"/>
                             <constraint firstItem="wVW-1N-Vr3" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="RMK-f9-zuz"/>
-                            <constraint firstItem="Paz-Ku-ral" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Ryb-vj-8jz"/>
                             <constraint firstItem="qEg-Rs-2fY" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="TAZ-IG-uoc"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="qEg-Rs-2fY" secondAttribute="bottom" id="TfJ-9G-VP1"/>
-                            <constraint firstItem="Paz-Ku-ral" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="Zy2-IK-Ed8"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="wVW-1N-Vr3" secondAttribute="bottom" id="ddf-wB-pSZ"/>
-                            <constraint firstItem="Paz-Ku-ral" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="hyD-Dj-j1p"/>
-                            <constraint firstItem="wVW-1N-Vr3" firstAttribute="top" secondItem="Paz-Ku-ral" secondAttribute="bottom" constant="20" id="t5O-TH-WdQ"/>
+                            <constraint firstItem="wVW-1N-Vr3" firstAttribute="top" secondItem="xxP-x7-sDA" secondAttribute="bottom" constant="20" id="hYy-Dx-xra"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="xxP-x7-sDA" secondAttribute="trailing" id="lYD-0V-fB9"/>
+                            <constraint firstItem="qEg-Rs-2fY" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="tXS-R0-N3h"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Cities" image="sun.min.fill" catalog="system" id="pru-UP-pSn"/>
@@ -56,6 +74,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="reloadButton" destination="0Rx-Dh-kF2" id="tef-B8-Dj9"/>
                         <outlet property="weatherTableView" destination="wVW-1N-Vr3" id="Dps-FA-Ega"/>
                         <segue destination="0Pr-6q-6D2" kind="showDetail" identifier="WeatherDetails" id="KBs-5J-wZk"/>
                     </connections>
@@ -377,6 +396,7 @@
     <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
     <resources>
         <image name="applescript" catalog="system" width="102" height="128"/>
+        <image name="arrow.clockwise" catalog="system" width="115" height="128"/>
         <image name="barometer" catalog="system" width="128" height="121"/>
         <image name="cloud" catalog="system" width="128" height="88"/>
         <image name="cloud.sun.fill" catalog="system" width="128" height="95"/>
