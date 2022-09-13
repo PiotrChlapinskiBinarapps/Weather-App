@@ -108,7 +108,7 @@ class CityWeatherViewModelImpl: CityWeatherViewModel {
                 if indexPath == IndexPath(row: 0, section: 0), weatherForLocation?.weatherForecast == nil {
                     weatherForecast = try await weatherRepository.getWeatherForecastForCity(weatherForLocation?.name ?? "")
                     weatherForLocation?.weatherForecast = weatherForecast
-                } else if weathers[indexPath.row].weatherForecast == nil, indexPath != IndexPath(row: 0, section: 0) {
+                } else if indexPath != IndexPath(row: 0, section: 0), weathers[indexPath.row].weatherForecast == nil {
                     let cityName = weathers[indexPath.row].name
                     weatherForecast = try await weatherRepository.getWeatherForecastForCity(cityName)
                     weathers[indexPath.row].weatherForecast = weatherForecast
